@@ -2,6 +2,8 @@ import org.json.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 class Client {
     private int clientId;
@@ -69,6 +71,7 @@ class Client {
 
 public class JsonManager {
     private String filePath;
+    private int customerCount=0 ;
     public JsonManager ()
     {
         File testFile = new File("");
@@ -80,7 +83,7 @@ public class JsonManager {
         try {
             JSONObject unu = new JSONObject();
             unu.put("personalData",new JSONArray());
-            PrintWriter writer = new PrintWriter(this.filePath);
+            PrintWriter writer = new PrintWriter(this.filePath);  // initialize the whole database from zero
             writer.print(unu.toString());
             writer.close();
             System.out.println(unu);
@@ -124,16 +127,91 @@ public class JsonManager {
             e.printStackTrace();
         }
     }
+    public void indexAll ()  // from 0 to length
+    {  try {
+        String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
+        JSONObject myObject = new JSONObject(contents);
+        JSONArray myArray = myObject.getJSONArray("personalData");
+        for (int i = 0; i < myArray.length(); i++) {
+            myArray.getJSONObject(i).put("clientId", i);
+        }
+        PrintWriter writer = new PrintWriter(this.filePath);
+        writer.print(myObject);
+        writer.close();
+    }
+    catch (IOException e)
+    {
+        e.printStackTrace();
+    }
+    }
+    public JSONArray searchJsonObj (String searchFor , int choose )  // 1-firstName 2-lastName 3-phoneNumber 4-adress 5-email 6-username
+    { JSONArray totalJsons= new JSONArray();
+        try {
+        String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
+        JSONObject myObject = new JSONObject(contents);
+        JSONArray myArray = myObject.getJSONArray("personalData");
+        switch (choose)
+        {
+            case 1:
+                for(int i=0;i<myArray.length();i++) {
+                    JSONObject temp = (JSONObject) myArray.get(i);
+
+                    if (temp.get("firstName").equals(searchFor))
+                        totalJsons.put(temp);
+                }
+                break;
+            case 2:
+                for(int i=0;i<myArray.length();i++) {
+                    JSONObject temp = (JSONObject) myArray.get(i);
+
+                    if (temp.get("lastName").equals(searchFor))
+                        totalJsons.put(temp);
+                }
+                break;
+            case 3:
+                for(int i=0;i<myArray.length();i++) {
+                    JSONObject temp = (JSONObject) myArray.get(i);
+
+                    if (temp.get("phoneNumber").equals(searchFor))
+                        totalJsons.put(temp);
+                }
+                break;
+            case 4:
+                for(int i=0;i<myArray.length();i++) {
+                    JSONObject temp = (JSONObject) myArray.get(i);
+
+                    if (temp.get("adress").equals(searchFor))
+                        totalJsons.put(temp);
+                }
+                break;
+            case  5:
+                for(int i=0;i<myArray.length();i++) {
+                    JSONObject temp = (JSONObject) myArray.get(i);
+
+                    if (temp.get("email").equals(searchFor))
+                        totalJsons.put(temp);
+                }
+                break;
+            case 6:
+                for(int i=0;i<myArray.length();i++) {
+                    JSONObject temp = (JSONObject) myArray.get(i);
+
+                    if (temp.get("username").equals(searchFor))
+                        totalJsons.put(temp);
+                }
+                break;
+
+        }
+    }
+    catch (IOException e ) {
+      e.printStackTrace();
+    }
+        
+        return totalJsons;
+
+
+    }
     public static void main(String[] argv) {
-//Creating a JSONObject object
-
-        //Inserting key-value pairs into the json object
-
-//        File testFile = new File("");
-//        String currentPath = testFile.getAbsolutePath();             //magic spell for finding the path
-//        String first = currentPath+"/src/main/resources/customerStorage.json";
-
-
 
             Client experimentalClient = new Client(1,"Ion","Castan","0756444890","Jud. PH,Oras. Bacanesti","youexp@gmail.com","xxDemonSlayerxx","gigel");
             JSONObject iExp = new JSONObject(experimentalClient);
@@ -142,25 +220,7 @@ public class JsonManager {
             manageStuff.init();
             manageStuff.addJsonObj(experimentalClient);
             manageStuff.addJsonObj(experimentalClient);
-            manageStuff.removeJsonObj(1);
-            //manageStuff.addJsonObj(experimentalClient);
-           // manageStuff.addJsonObj(experimentalClient);
-
-            // JSONArray emails = o.getJSONArray("emails");
-            // for (int i = 0; i < emails.length(); i++) {
-            //    System.out.println(emails.get(i));
-            // }
-            // JSONObject family = o.getJSONObject("family");
-            // System.out.println(family.getString("spouse"));
-//            JSONArray stocare = o.getJSONArray("personalData");
-//            System.out.println(stocare.get(0));
-//            System.out.println(stocare.get(1));
-//            System.out.println(experimentalClient.toString());
-//            System.out.println(iExp);
-//            JSONObject what = new JSONObject(experimentalClient.toString());
-//            System.out.println(what);
-
-
-
+            System.out.println(manageStuff.searchJsonObj("Ion",1));
+            manageStuff.indexAll();
     }
 }
