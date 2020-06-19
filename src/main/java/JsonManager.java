@@ -206,7 +206,7 @@ public class JsonManager {
     catch (IOException e ) {
       e.printStackTrace();
     }
-        
+
         return totalJsons;
 
 
