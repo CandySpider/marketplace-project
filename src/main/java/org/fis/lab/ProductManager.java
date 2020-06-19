@@ -18,7 +18,7 @@ public class ProductManager {
     {
         try {
             JSONObject pr = new JSONObject();
-            pr.put("personalData",new JSONArray());
+            pr.put("product",new JSONArray());
             PrintWriter writer = new PrintWriter(this.filePath);
             writer.print(pr.toString());
             writer.close();
@@ -33,7 +33,7 @@ public class ProductManager {
     { try {
         String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
         JSONObject myObject = new JSONObject(contents);
-        JSONArray myArray = myObject.getJSONArray("personalData");
+        JSONArray myArray = myObject.getJSONArray("product");
         myArray.put(new JSONObject(theOne.toString()));
         System.out.println(myObject);
         PrintWriter writer = new PrintWriter(this.filePath);
@@ -51,7 +51,7 @@ public class ProductManager {
         try {
             String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
             JSONObject myObject = new JSONObject(contents);
-            JSONArray myArray = myObject.getJSONArray("personalData");
+            JSONArray myArray = myObject.getJSONArray("product");
             myArray.remove(i);
             System.out.println(myObject);
             PrintWriter writer = new PrintWriter(this.filePath);
