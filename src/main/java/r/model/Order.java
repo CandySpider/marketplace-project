@@ -1,4 +1,4 @@
-package org.fis.lab.model;
+package r.model;
 
 public class Order {
     private int orderId;
