@@ -124,6 +124,17 @@ public class ProductManager {
 
 
     }
+    public JSONArray showAll ()
+    { JSONArray myArray=new JSONArray();
+        try {
+            String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
+            JSONObject myObject = new JSONObject(contents);
+            myArray = myObject.getJSONArray("product");
+
+        }catch (IOException e)
+        {e.printStackTrace();}
+        return myArray;
+    }
     public static void main(String[] argv) {
 
             Product experimentalProduct = new Product(45,0,"careProducts","Dyson Hair Curler",120,"automatic ceramic hair curler");
