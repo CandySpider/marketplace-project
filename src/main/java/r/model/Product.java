@@ -33,7 +33,7 @@ public class Product {
     public String toString() {
         return "{" +
                 " \"productId\": " + productId +
-                ", \"Name\": " + "\"" + name + "\"" +
+                ", \"name\": " + "\"" + name + "\"" +
                 ", \"quantity\": " + "\"" + quantity + "\"" +
                 ", \"description\": " + "\"" + description + "\""  +
                 '}';
