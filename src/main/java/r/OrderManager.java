@@ -1,5 +1,7 @@
 package r;
 
+import com.sun.corba.se.impl.resolver.ORBDefaultInitRefResolverImpl;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import r.model.Order;
 import org.json.*;
 import java.io.*;
@@ -132,10 +134,14 @@ public class OrderManager {
         JSONObject iExp = new JSONObject(experimentalOrder);
 
         OrderManager manageStuff = new OrderManager();
-        //manageStuff.init();
+        manageStuff.init();
         manageStuff.addJsonObj(experimentalOrder);
         manageStuff.addJsonObj(experimentalOrder);
-        System.out.println(manageStuff.searchJsonObj("done",3));
+        manageStuff.addJsonObj(new Order(5,1,2,"processing"));
+        manageStuff.addJsonObj(new Order(7,1,3,"processing"));
+        manageStuff.addJsonObj(new Order(8,2,3,"processing"));
+        manageStuff.addJsonObj(new Order(9,3,3,"processing"));
+        System.out.println(manageStuff.searchJsonObj("processing",3));
 
 
 

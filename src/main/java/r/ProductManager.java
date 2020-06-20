@@ -81,19 +81,39 @@ public class ProductManager {
         e.printStackTrace();
     }
     }
-    public JSONArray searchJsonObj (String searchFor )  //name
+    public JSONArray searchJsonObj (String searchFor, int choose)  //1-name 2-orderId 3-category
     { JSONArray totalJsons= new JSONArray();
         try {
             String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
             JSONObject myObject = new JSONObject(contents);
             JSONArray myArray = myObject.getJSONArray("product");
+             switch (choose) {
+                 case 1:
+                 for (int i = 0; i < myArray.length(); i++) {
+                     JSONObject temp = (JSONObject) myArray.get(i);
 
-                    for(int i=0;i<myArray.length();i++) {
-                        JSONObject temp = (JSONObject) myArray.get(i);
+                     if (temp.get("name").equals(searchFor))
+                         totalJsons.put(temp);
+                 }
+                 break;
+                 case 2:
+                     for (int i = 0; i < myArray.length(); i++) {
+                         JSONObject temp = (JSONObject) myArray.get(i);
 
-                        if (temp.get("name").equals(searchFor))
-                            totalJsons.put(temp);
-                    }
+                         if (temp.get("orderId").equals(searchFor))
+                             totalJsons.put(temp);
+                     }
+                     break;
+                 case 3:
+                     for (int i = 0; i < myArray.length(); i++) {
+                         JSONObject temp = (JSONObject) myArray.get(i);
+
+                         if (temp.get("category").equals(searchFor))
+                             totalJsons.put(temp);
+                     }
+                     break;
+
+             }
 
         }
         catch (IOException e ) {
@@ -106,14 +126,15 @@ public class ProductManager {
     }
     public static void main(String[] argv) {
 
-            Product experimentalProduct = new Product(45,"Dyson Hair Curler",120,"automatic ceramic hair curler");
-            JSONObject iExp = new JSONObject(experimentalProduct);
+            Product experimentalProduct = new Product(45,0,"careProducts","Dyson Hair Curler",120,"automatic ceramic hair curler");
 
             ProductManager manageStuff = new ProductManager();
             manageStuff.init();
             manageStuff.addJsonObj(experimentalProduct);
-            manageStuff.addJsonObj(experimentalProduct);
-            System.out.println(manageStuff.searchJsonObj("Dyson Hair Curler"));
+            manageStuff.addJsonObj(new Product(2,0,"toys","Jucarie Mega",25,"Super faina!"));
+            manageStuff.addJsonObj(new Product(3,1,"tech","Telfon",40,"Iphone"));
+            manageStuff.addJsonObj(new Product(2,1,"food","Ciocolata",15,"Super faina!"));
+            //System.out.println(manageStuff.searchJsonObj("Dyson Hair Curler"));
 
 
     }

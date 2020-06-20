@@ -1,15 +1,10 @@
+package p;
+
 import org.json.*;
 
-import javax.crypto.Cipher;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.Signature;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
 
 class Staff {
     private int staffId;
