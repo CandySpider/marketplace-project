@@ -221,6 +221,17 @@ public class JsonManager {
 
 
     }
+    public JSONArray showAll ()
+    { JSONArray myArray=new JSONArray();
+        try {
+            String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
+            JSONObject myObject = new JSONObject(contents);
+            myArray = myObject.getJSONArray("personalData");
+
+        }catch (IOException e)
+        {e.printStackTrace();}
+        return myArray;
+    }
     public static void main(String[] argv)  {
             AESencryption encrypt = new AESencryption();
             Client experimentalClient = new Client(1,"Ion","Castan","0756444890","Jud. PH,Oras. Bacanesti","youexp@gmail.com","xxDemonSlayerxx",encrypt.encrypt("gigel"),encrypt.encrypt("4485790854113695"));
