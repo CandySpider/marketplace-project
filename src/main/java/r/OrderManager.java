@@ -1,5 +1,7 @@
 package r;
 
+import com.sun.corba.se.impl.resolver.ORBDefaultInitRefResolverImpl;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import r.model.Order;
 import org.json.*;
 import java.io.*;
@@ -35,7 +37,6 @@ public class OrderManager {
         JSONObject myObject = new JSONObject(contents);
         JSONArray myArray = myObject.getJSONArray("personalData");
         myArray.put(new JSONObject(theOne.toString()));
-        System.out.println(myObject);
         PrintWriter writer = new PrintWriter(this.filePath);
         writer.print(myObject);
         writer.close();
@@ -44,6 +45,7 @@ public class OrderManager {
     {
         e.printStackTrace();
     }
+    indexAll();
     }
 
     public void removeJsonObj (int i )
@@ -62,42 +64,85 @@ public class OrderManager {
         {
             e.printStackTrace();
         }
+        indexAll();
     }
+    public void indexAll ()  // from 0 to length
+    {  try {
+        String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
+        JSONObject myObject = new JSONObject(contents);
+        JSONArray myArray = myObject.getJSONArray("personalData");
+        for (int i = 0; i < myArray.length(); i++) {
+            myArray.getJSONObject(i).put("orderId", i);
+        }
+        PrintWriter writer = new PrintWriter(this.filePath);
+        writer.print(myObject);
+        writer.close();
+    }
+    catch (IOException e)
+    {
+        e.printStackTrace();
+    }
+    }
+
+    public JSONArray searchJsonObj (String searchFor , int choose )  // 1-clientId 2-staffId 3-status
+    { JSONArray totalJsons= new JSONArray();
+        try {
+            String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
+            JSONObject myObject = new JSONObject(contents);
+            JSONArray myArray = myObject.getJSONArray("personalData");
+            switch (choose)
+            {
+                case 1:
+                    for(int i=0;i<myArray.length();i++) {
+                        JSONObject temp = (JSONObject) myArray.get(i);
+
+                        if (temp.get("clientId").equals(searchFor))
+                            totalJsons.put(temp);
+                    }
+                    break;
+                case 2:
+                    for(int i=0;i<myArray.length();i++) {
+                        JSONObject temp = (JSONObject) myArray.get(i);
+
+                        if (temp.get("staffId").equals(searchFor))
+                            totalJsons.put(temp);
+                    }
+                    break;
+                case 3:
+                    for(int i=0;i<myArray.length();i++) {
+                        JSONObject temp = (JSONObject) myArray.get(i);
+
+                        if (temp.get("status").equals(searchFor))
+                            totalJsons.put(temp);
+                    }
+                    break;
+
+            }
+        }
+        catch (IOException e ) {
+            e.printStackTrace();
+        }
+
+        return totalJsons;
+
+
+    }
+
     public static void main(String[] argv) {
-//Creating a JSONObject object
 
-        //Inserting key-value pairs into the json object
-
-//        File testFile = new File("");
-//        String currentPath = testFile.getAbsolutePath();             //magic spell for finding the path
-//        String first = currentPath+"/src/main/resources/customerStorage.json";
-
-
-
-        Order experimentalOrder = new Order(1,1,1,"done");
+        Order experimentalOrder = new Order(30,1,1,"done");
         JSONObject iExp = new JSONObject(experimentalOrder);
 
         OrderManager manageStuff = new OrderManager();
         manageStuff.init();
         manageStuff.addJsonObj(experimentalOrder);
         manageStuff.addJsonObj(experimentalOrder);
-        manageStuff.removeJsonObj(1);
-        //manageStuff.addJsonObj(experimentalClient);
-        // manageStuff.addJsonObj(experimentalClient);
+        manageStuff.addJsonObj(new Order(5,1,2,"processing"));
+        manageStuff.addJsonObj(new Order(7,1,3,"processing"));
+        manageStuff.addJsonObj(new Order(8,2,3,"processing"));
+        manageStuff.addJsonObj(new Order(9,3,3,"processing"));
+        System.out.println(manageStuff.searchJsonObj("processing",3));
 
-        // JSONArray emails = o.getJSONArray("emails");
-        // for (int i = 0; i < emails.length(); i++) {
-        //    System.out.println(emails.get(i));
-        // }
-        // JSONObject family = o.getJSONObject("family");
-        // System.out.println(family.getString("spouse"));
-//            JSONArray stocare = o.getJSONArray("personalData");
-//            System.out.println(stocare.get(0));
-//            System.out.println(stocare.get(1));
-//            System.out.println(experimentalClient.toString());
-//            System.out.println(iExp);
-//            JSONObject what = new JSONObject(experimentalClient.toString());
-//            System.out.println(what);
 
 
 

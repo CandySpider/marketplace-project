@@ -1,15 +1,10 @@
+package p;
+
 import org.json.*;
 
-import javax.crypto.Cipher;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.Signature;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
 
 class Client {
     private int clientId;
@@ -225,6 +220,17 @@ public class JsonManager {
         return totalJsons;
 
 
+    }
+    public JSONArray showAll ()
+    { JSONArray myArray=new JSONArray();
+        try {
+            String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
+            JSONObject myObject = new JSONObject(contents);
+            myArray = myObject.getJSONArray("personalData");
+
+        }catch (IOException e)
+        {e.printStackTrace();}
+        return myArray;
     }
     public static void main(String[] argv)  {
             AESencryption encrypt = new AESencryption();

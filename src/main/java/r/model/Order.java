@@ -32,10 +32,10 @@ public class Order {
     @Override
     public String toString() {
         return "{" +
-                " \"productId\": " + orderId +
-                ", \"Name\": " + "\"" + clientId + "\"" +
-                ", \"quantity\": " + "\"" + staffId + "\"" +
-                ", \"description\": " + "\"" + status + "\""  +
+                " \"orderId\": " + orderId +
+                ", \"clientId\": " + "\"" + clientId + "\"" +
+                ", \"staffId\": " + "\"" + staffId + "\"" +
+                ", \"status\": " + "\"" + status + "\""  +
                 '}';
     }
 }
