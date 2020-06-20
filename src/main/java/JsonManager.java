@@ -20,6 +20,7 @@ class Client {
     private String email;
     private String username;
     private String encryptedPassword;
+    private String cryptedCard;
 
     public int getClientId() {
         return clientId;
@@ -49,7 +50,11 @@ class Client {
         return username;
     }
 
-    public Client(int clientId, String firstName, String lastName, String phoneNumber, String adress, String email, String username, String encryptedPassword) {
+    public String getCryptedCard() {
+        return cryptedCard;
+    }
+
+    public Client(int clientId, String firstName, String lastName, String phoneNumber, String adress, String email, String username, String encryptedPassword, String cryptedCard) {
         this.clientId = clientId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -58,6 +63,7 @@ class Client {
         this.email = email;
         this.username = username;
         this.encryptedPassword = encryptedPassword;
+        this.cryptedCard=cryptedCard;
     }
 
     @Override
@@ -71,6 +77,7 @@ class Client {
                 ", \"email\": " + "\"" + email  + "\"" +
                 ", \"username\": " + "\"" + username  + "\"" +
                 ", \"encryptedPassword\": " + "\"" + encryptedPassword  + "\"" +
+                ", \"cryptedCard\": " + "\"" + cryptedCard  + "\"" +
                 '}';
     }
 }
@@ -105,7 +112,7 @@ public class JsonManager {
         JSONObject myObject = new JSONObject(contents);
         JSONArray myArray = myObject.getJSONArray("personalData");
         myArray.put(new JSONObject(theOne.toString()));
-        System.out.println(myObject);
+        //System.out.println(myObject);
         PrintWriter writer = new PrintWriter(this.filePath);
         writer.print(myObject);
         writer.close();
@@ -114,6 +121,7 @@ public class JsonManager {
     {
         e.printStackTrace();
     }
+    indexAll();
     }
 
     public void removeJsonObj (int i )
@@ -132,6 +140,7 @@ public class JsonManager {
         {
             e.printStackTrace();
         }
+        indexAll();
     }
     public void indexAll ()  // from 0 to length
     {  try {
@@ -217,31 +226,26 @@ public class JsonManager {
 
 
     }
-    public static void main(String[] argv) throws  Exception {
+    public static void main(String[] argv)  {
+            AESencryption encrypt = new AESencryption();
+            Client experimentalClient = new Client(1,"Ion","Castan","0756444890","Jud. PH,Oras. Bacanesti","youexp@gmail.com","xxDemonSlayerxx",encrypt.encrypt("gigel"),encrypt.encrypt("4485790854113695"));
+            Client experimentalClient2 = new Client(1,"Mihai","Corneliu","0782443890","Jud. Timis,Oras. Timisoara","youexp2@gmail.com","Bravo",encrypt.encrypt("idk12"),encrypt.encrypt("4539535904808240"));
+            Client experimentalClient3 = new Client(1,"Maria","Castan","0756420897","Jud. Timis,Oras. Bacanesti","youexp3@gmail.com","Aistil",encrypt.encrypt("whatev"),encrypt.encrypt("4680771904751761284"));
 
-            Client experimentalClient = new Client(1,"Ion","Castan","0756444890","Jud. PH,Oras. Bacanesti","youexp@gmail.com","xxDemonSlayerxx","gigel");
             JSONObject iExp = new JSONObject(experimentalClient);
 
             JsonManager manageStuff = new JsonManager();
             manageStuff.init();
             manageStuff.addJsonObj(experimentalClient);
             manageStuff.addJsonObj(experimentalClient);
+            manageStuff.addJsonObj(experimentalClient2);
+            manageStuff.addJsonObj(experimentalClient3);
             System.out.println(manageStuff.searchJsonObj("Ion",1));
-            manageStuff.indexAll();
-            System.out.println();
             System.out.println();
             System.out.println();
 
-            Encryption encryptThis = new Encryption();
-            Signature sign1=encryptThis.getSign();
-            KeyPairGenerator keyPairGen1=encryptThis.getKeyPairGen();
-            KeyPair pair1=encryptThis.getPair();
-            Cipher cipher1=encryptThis.getCipher();
-            Encryption encryptNext = new Encryption(sign1,keyPairGen1,pair1,cipher1);
-            System.out.println(encryptNext.undoIT(encryptThis.doIT("unu")));
-            System.out.println(sign1.toString() + '\n' + keyPairGen1.toString() + '\n' + pair1.toString() + '\n' + cipher1.toString());
-            Encryption encryptNext2 = new Encryption();
-            System.out.println(encryptNext.doIT("unu"));
+            System.out.println();
+
 
 
 
