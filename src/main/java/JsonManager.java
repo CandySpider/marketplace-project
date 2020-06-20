@@ -1,8 +1,14 @@
 import org.json.*;
+
+import javax.crypto.Cipher;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.Signature;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 class Client {
@@ -211,7 +217,7 @@ public class JsonManager {
 
 
     }
-    public static void main(String[] argv) {
+    public static void main(String[] argv) throws  Exception {
 
             Client experimentalClient = new Client(1,"Ion","Castan","0756444890","Jud. PH,Oras. Bacanesti","youexp@gmail.com","xxDemonSlayerxx","gigel");
             JSONObject iExp = new JSONObject(experimentalClient);
@@ -222,5 +228,23 @@ public class JsonManager {
             manageStuff.addJsonObj(experimentalClient);
             System.out.println(manageStuff.searchJsonObj("Ion",1));
             manageStuff.indexAll();
+            System.out.println();
+            System.out.println();
+            System.out.println();
+
+            Encryption encryptThis = new Encryption();
+            Signature sign1=encryptThis.getSign();
+            KeyPairGenerator keyPairGen1=encryptThis.getKeyPairGen();
+            KeyPair pair1=encryptThis.getPair();
+            Cipher cipher1=encryptThis.getCipher();
+            Encryption encryptNext = new Encryption(sign1,keyPairGen1,pair1,cipher1);
+            System.out.println(encryptNext.undoIT(encryptThis.doIT("unu")));
+            System.out.println(sign1.toString() + '\n' + keyPairGen1.toString() + '\n' + pair1.toString() + '\n' + cipher1.toString());
+            Encryption encryptNext2 = new Encryption();
+            System.out.println(encryptNext.doIT("unu"));
+
+
+
+
     }
 }
