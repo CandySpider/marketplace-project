@@ -14,9 +14,8 @@ class Staff {
     private String username;
     private String encryptedPassword;
     private  float salary;
-    private Object[] orderlist;
 
-    public Staff(int staffId, String firstName, String lastName, String email, String username, String encryptedPassword, float salary, Object[] orderlist) {
+    public Staff(int staffId, String firstName, String lastName, String email, String username, String encryptedPassword, float salary) {
         this.staffId = staffId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -24,7 +23,6 @@ class Staff {
         this.username = username;
         this.encryptedPassword = encryptedPassword;
         this.salary = salary;
-        this.orderlist = orderlist;
     }
 
     public float getSalary() {
@@ -41,10 +39,6 @@ class Staff {
 
     public String getLastName() {
         return lastName;
-    }
-
-    public Object[] getOrderlist() {
-        return orderlist;
     }
 
     public String getEmail() {
@@ -66,7 +60,6 @@ class Staff {
                 ", \"username\": " + "\"" + username  + "\"" +
                 ", \"encryptedPassword\": " + "\"" + encryptedPassword  + "\"" +
                 ", \"salary\": " + "\"" + salary  + "\"" +
-                ", \"orderList\": " + "\"" + orderlist  + "\"" +
                 '}';
     }
 }
@@ -201,13 +194,24 @@ public class StaffManager {
 
 
     }
+    public JSONArray showAll ()
+    { JSONArray myArray=new JSONArray();
+        try {
+            String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
+            JSONObject myObject = new JSONObject(contents);
+            myArray = myObject.getJSONArray("personalData");
+
+        }catch (IOException e)
+        {e.printStackTrace();}
+        return myArray;
+    }
     public  static void main (String[] argv)
     {
 
         AESencryption encrypt = new AESencryption();
-        Staff experimentalStaff = new Staff (1,"Marin","Costea","interzis@yahoo.com","mar23",encrypt.encrypt("nice"),2500,new Object[3]);
-        Staff experimentalStaff2 = new Staff(1,"Ioana","Gheorghe","rockit@gmai.com","nope12",encrypt.encrypt("super"),4000,new Object[3]);
-        Staff experimentalStaff3 =new Staff(1,"Jane","Daria","lol@gmail.com","Dar12",encrypt.encrypt("parolamea24"),3000,new Object[3]);
+        Staff experimentalStaff = new Staff (1,"Marin","Costea","interzis@yahoo.com","mar23",encrypt.encrypt("nice"),2500);
+        Staff experimentalStaff2 = new Staff(1,"Ioana","Gheorghe","rockit@gmai.com","nope12",encrypt.encrypt("super"),4000);
+        Staff experimentalStaff3 =new Staff(1,"Jane","Daria","lol@gmail.com","Dar12",encrypt.encrypt("parolamea24"),3000);
         JSONObject initialExp = new JSONObject(experimentalStaff);
         StaffManager godManager = new StaffManager();
         godManager.init();
