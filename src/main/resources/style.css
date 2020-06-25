@@ -1,0 +1,96 @@
+.box1 {
+    -fx-background-image: url("logo.png");
+    -fx-alignment: center;
+}
+.a1 {
+    -fx-background-color: #020617;
+}
+.a2 {
+    -fx-background-color: transparent;
+}
+.main   {
+    /*-fx-background-color: #0d1026;*/
+    -fx-background-image: url("back.png");
+}
+.b {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Product Sans Medium", Helvetica, sans-serif;
+    -fx-font-size: 15.0;
+    -fx-opacity: 0.5;
+
+}
+.b:focused {
+    -fx-opacity: 0.7;
+    -fx-background-color: #0d1026;
+}
+.a3 {
+    -fx-background-image: url("Categories.png");
+
+}
+.a4 {
+    -fx-background-image: url("Explore.png");
+
+}
+.a5 {
+    -fx-background-image: url("Wishlist.png");
+
+}
+.a6 {
+    -fx-background-image: url("Cart.png");
+
+}
+.s {
+    -fx-background-image: url("search.png");
+}
+.bb {
+    -fx-background-color: transparent;
+    -fx-opacity: 0.5;
+}
+.searchbar {
+    -fx-background-color: #404670;
+    -fx-opacity: 0.5;
+    -fx-text-fill: white;
+    -fx-font-size: 13.0;
+    -fx-background-radius: 20;
+}
+.bb:hover {
+    -fx-opacity: 1;
+}
+.si {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-font-family: "Product Sans Medium", Helvetica, sans-serif;
+    -fx-font-size: 15.0;
+    -fx-background-radius: 5;
+}
+.header {
+    -fx-font-family: "Garamond", serif;
+    -fx-background-color: transparent;
+}
+
+.bl {
+    -fx-background-color: transparent;
+    -fx-opacity: 0.5;
+}
+.bl:hover {
+    -fx-opacity: 0.7;
+}
+
+.siscene {
+    -fx-background-image: url("siscene.png");
+}
+.sbar {
+    -fx-background-radius: 20;
+    -fx-background-color: #626c75;
+    -fx-opacity: 0.8;
+    -fx-text-fill: white;
+    -fx-font-size: 13.0;
+}
+.ss {
+    -fx-background-color: #0d1026;
+    -fx-opacity: 0.8;
+}
+.suscene {
+    -fx-background-image: url("suscene.png");
+}
