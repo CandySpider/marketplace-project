@@ -1,4 +1,4 @@
-package p;
+package managers;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

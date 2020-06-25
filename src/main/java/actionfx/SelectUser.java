@@ -1,6 +1,9 @@
 package actionfx;
 import org.json.JSONArray;
-import p.*;
+import managers.AESencryption;
+import managers.ClientManager;
+import managers.StaffManager;
+
 public class SelectUser {
     private String username;
     private String password;
@@ -15,7 +18,7 @@ public class SelectUser {
         AESencryption localEncryption = new AESencryption();
        String comparePassword = localEncryption.encrypt(password);
 
-        JsonManager manageClient = new JsonManager();
+        ClientManager manageClient = new ClientManager();
         JSONArray check1 = manageClient.searchJsonObj(username,6);
 
         if(!check1.isEmpty())

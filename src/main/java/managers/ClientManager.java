@@ -1,86 +1,17 @@
-package p;
+package managers;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.*;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-class Client {
-    private int clientId;
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
-    private String adress;
-    private String email;
-    private String username;
-    private String encryptedPassword;
-    private String cryptedCard;
 
-    public int getClientId() {
-        return clientId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getAdress() {
-        return adress;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getCryptedCard() {
-        return cryptedCard;
-    }
-
-    public Client(int clientId, String firstName, String lastName, String phoneNumber, String adress, String email, String username, String encryptedPassword, String cryptedCard) {
-        this.clientId = clientId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.adress = adress;
-        this.email = email;
-        this.username = username;
-        this.encryptedPassword = encryptedPassword;
-        this.cryptedCard=cryptedCard;
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                " \"clientId\": " +  clientId +
-                ", \"firstName\": " + "\"" + firstName + "\"" +
-                ", \"lastName\": " + "\"" + lastName + "\""  +
-                ", \"phoneNumber\": " + "\"" + phoneNumber + "\"" +
-                ", \"adress\": " + "\"" + adress + "\""  +
-                ", \"email\": " + "\"" + email  + "\"" +
-                ", \"username\": " + "\"" + username  + "\"" +
-                ", \"encryptedPassword\": " + "\"" + encryptedPassword  + "\"" +
-                ", \"cryptedCard\": " + "\"" + cryptedCard  + "\"" +
-                '}';
-    }
-}
-
-public class JsonManager {
+public class ClientManager {
     private String filePath;
     private int customerCount=0 ;
-    public JsonManager ()
+    public ClientManager()
     {
         File testFile = new File("");
         String currentPath = testFile.getAbsolutePath();             //magic spell for finding the path
@@ -101,7 +32,7 @@ public class JsonManager {
             e.printStackTrace();
         }
     }
-    public void addJsonObj (Client theOne)
+    public void addJsonObj (@NotNull Client theOne)
     { try {
         String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
         JSONObject myObject = new JSONObject(contents);
@@ -240,7 +171,7 @@ public class JsonManager {
 
             JSONObject iExp = new JSONObject(experimentalClient);
 
-            JsonManager manageStuff = new JsonManager();
+            ClientManager manageStuff = new ClientManager();
             manageStuff.init();
             manageStuff.addJsonObj(experimentalClient);
             manageStuff.addJsonObj(experimentalClient);
@@ -256,5 +187,77 @@ public class JsonManager {
 
 
 
+    }
+}
+
+
+class Client {
+    private int clientId;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private String adress;
+    private String email;
+    private String username;
+    private String encryptedPassword;
+    private String cryptedCard;
+
+    public int getClientId() {
+        return clientId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getAdress() {
+        return adress;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getCryptedCard() {
+        return cryptedCard;
+    }
+
+    public Client(int clientId, String firstName, String lastName, String phoneNumber, String adress, String email, String username, String encryptedPassword, String cryptedCard) {
+        this.clientId = clientId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.adress = adress;
+        this.email = email;
+        this.username = username;
+        this.encryptedPassword = encryptedPassword;
+        this.cryptedCard=cryptedCard;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                " \"clientId\": " +  clientId +
+                ", \"firstName\": " + "\"" + firstName + "\"" +
+                ", \"lastName\": " + "\"" + lastName + "\""  +
+                ", \"phoneNumber\": " + "\"" + phoneNumber + "\"" +
+                ", \"adress\": " + "\"" + adress + "\""  +
+                ", \"email\": " + "\"" + email  + "\"" +
+                ", \"username\": " + "\"" + username  + "\"" +
+                ", \"encryptedPassword\": " + "\"" + encryptedPassword  + "\"" +
+                ", \"cryptedCard\": " + "\"" + cryptedCard  + "\"" +
+                '}';
     }
 }
