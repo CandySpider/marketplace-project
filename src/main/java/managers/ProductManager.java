@@ -52,7 +52,31 @@ public class ProductManager {
             String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
             JSONObject myObject = new JSONObject(contents);
             JSONArray myArray = myObject.getJSONArray("product");
-            myArray.remove(i);
+
+            //remove all the orders  , before removing the client
+
+//            OrderManager orderRemover = new OrderManager();
+//            JSONObject seeker = myArray.getJSONObject(i);
+//            String seekerString = seeker.get("clientId").toString();
+//            JSONArray remember = orderRemover.searchJsonObj(seekerString,1);
+
+
+            //
+            int actualIndex=-1;
+            for(int j=0;j<myArray.length();j++)
+            {   JSONObject temp ;
+                temp=myArray.getJSONObject(j);
+                if(temp.get("productId").equals(String.valueOf(i)))
+                {
+                    actualIndex = j;
+                    break;
+                }
+
+            }
+            if(actualIndex==-1)
+                return;
+            myArray.remove(actualIndex);
+            //System.out.println(myObject);
             PrintWriter writer = new PrintWriter(this.filePath);
             writer.print(myObject);
             writer.close();
@@ -60,6 +84,13 @@ public class ProductManager {
         catch (IOException e )
         {
             e.printStackTrace();
+        }
+
+    }
+    public void removeJsonArray (int[] inRemoval)
+    {
+        for (int value : inRemoval) {
+            removeJsonObj(value);
         }
         indexAll();
     }
@@ -69,7 +100,7 @@ public class ProductManager {
         JSONObject myObject = new JSONObject(contents);
         JSONArray myArray = myObject.getJSONArray("product");
         for (int i = 0; i < myArray.length(); i++) {
-            myArray.getJSONObject(i).put("productId", i);
+            myArray.getJSONObject(i).put("productId", String.valueOf(i));
         }
         PrintWriter writer = new PrintWriter(this.filePath);
         writer.print(myObject);
@@ -144,7 +175,9 @@ public class ProductManager {
             manageStuff.addJsonObj(new Product(2,0,"toys","Jucarie Mega",25,"Super faina!"));
             manageStuff.addJsonObj(new Product(3,1,"tech","Telfon",40,"Iphone"));
             manageStuff.addJsonObj(new Product(2,1,"food","Ciocolata",15,"Super faina!"));
-            //System.out.println(manageStuff.searchJsonObj("Dyson Hair Curler"));
+//            int exp [] = {0,1,2,3};
+//            manageStuff.removeJsonArray(exp);
+            System.out.println(manageStuff.showAll());
 
 
     }

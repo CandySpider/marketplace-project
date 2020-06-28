@@ -56,8 +56,31 @@ public class ClientManager {
             String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
             JSONObject myObject = new JSONObject(contents);
             JSONArray myArray = myObject.getJSONArray("personalData");
-            myArray.remove(i);
-            System.out.println(myObject);
+
+            //remove all the orders  , before removing the client
+
+//            OrderManager orderRemover = new OrderManager();
+//            JSONObject seeker = myArray.getJSONObject(i);
+//            String seekerString = seeker.get("clientId").toString();
+//            JSONArray remember = orderRemover.searchJsonObj(seekerString,1);
+
+
+            //
+            int actualIndex=-1;
+            for(int j=0;j<myArray.length();j++)
+            {   JSONObject temp ;
+                temp=myArray.getJSONObject(j);
+                if(temp.get("clientId").equals(String.valueOf(i)))
+                {
+                    actualIndex = j;
+                    break;
+                }
+
+            }
+            if(actualIndex==-1)
+                return;
+            myArray.remove(actualIndex);
+            //System.out.println(myObject);
             PrintWriter writer = new PrintWriter(this.filePath);
             writer.print(myObject);
             writer.close();
@@ -65,6 +88,13 @@ public class ClientManager {
         catch (IOException e )
         {
             e.printStackTrace();
+        }
+
+    }
+    public void removeJsonArray (int[] inRemoval)
+    {
+        for (int value : inRemoval) {
+            removeJsonObj(value);
         }
         indexAll();
     }
@@ -74,7 +104,7 @@ public class ClientManager {
         JSONObject myObject = new JSONObject(contents);
         JSONArray myArray = myObject.getJSONArray("personalData");
         for (int i = 0; i < myArray.length(); i++) {
-            myArray.getJSONObject(i).put("clientId", i);
+            myArray.getJSONObject(i).put("clientId", String.valueOf(i));
         }
         PrintWriter writer = new PrintWriter(this.filePath);
         writer.print(myObject);
@@ -176,12 +206,14 @@ public class ClientManager {
             manageStuff.addJsonObj(experimentalClient);
             manageStuff.addJsonObj(experimentalClient);
             manageStuff.addJsonObj(experimentalClient2);
-            manageStuff.addJsonObj(experimentalClient3);
-            System.out.println(manageStuff.searchJsonObj("Ion",1));
-            System.out.println();
-            System.out.println();
+//            manageStuff.removeJsonObj(2);
+//            System.out.println(manageStuff.showAll());
+            //manageStuff.addJsonObj(experimentalClient3);
+            int []exp = {0,1,2};
+            manageStuff.removeJsonArray(exp);
 
-            System.out.println();
+            System.out.println(manageStuff.showAll());
+
 
 
 
@@ -249,7 +281,7 @@ class Client {
     @Override
     public String toString() {
         return "{" +
-                " \"clientId\": " +  clientId +
+                " \"clientId\": " + clientId +
                 ", \"firstName\": " + "\"" + firstName + "\"" +
                 ", \"lastName\": " + "\"" + lastName + "\""  +
                 ", \"phoneNumber\": " + "\"" + phoneNumber + "\"" +

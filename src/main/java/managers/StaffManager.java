@@ -114,8 +114,31 @@ public class StaffManager {
             String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
             JSONObject myObject = new JSONObject(contents);
             JSONArray myArray = myObject.getJSONArray("personalData");
-            myArray.remove(i);
-            System.out.println(myObject);
+
+            //remove all the orders  , before removing the client
+
+//            OrderManager orderRemover = new OrderManager();
+//            JSONObject seeker = myArray.getJSONObject(i);
+//            String seekerString = seeker.get("clientId").toString();
+//            JSONArray remember = orderRemover.searchJsonObj(seekerString,1);
+
+
+            //
+            int actualIndex=-1;
+            for(int j=0;j<myArray.length();j++)
+            {   JSONObject temp ;
+                temp=myArray.getJSONObject(j);
+                if(temp.get("staffId").equals(String.valueOf(i)))
+                {
+                    actualIndex = j;
+                    break;
+                }
+
+            }
+            if(actualIndex==-1)
+                return;
+            myArray.remove(actualIndex);
+            //System.out.println(myObject);
             PrintWriter writer = new PrintWriter(this.filePath);
             writer.print(myObject);
             writer.close();
@@ -123,6 +146,13 @@ public class StaffManager {
         catch (IOException e )
         {
             e.printStackTrace();
+        }
+
+    }
+    public void removeJsonArray (int[] inRemoval)
+    {
+        for (int value : inRemoval) {
+            removeJsonObj(value);
         }
         indexAll();
     }
@@ -132,7 +162,7 @@ public class StaffManager {
         JSONObject myObject = new JSONObject(contents);
         JSONArray myArray = myObject.getJSONArray("personalData");
         for (int i = 0; i < myArray.length(); i++) {
-            myArray.getJSONObject(i).put("staffId", i);
+            myArray.getJSONObject(i).put("staffId", String.valueOf(i));
         }
         PrintWriter writer = new PrintWriter(this.filePath);
         writer.print(myObject);
@@ -218,6 +248,9 @@ public class StaffManager {
         godManager.addJsonObj(experimentalStaff);
         godManager.addJsonObj(experimentalStaff2);
         godManager.addJsonObj(experimentalStaff3);
-        System.out.println(godManager.searchJsonObj("Jane",1));
+        int []exp ={0,1,2};
+        godManager.removeJsonArray(exp);
+        System.out.println(godManager.showAll());
+        //System.out.println(godManager.searchJsonObj("Jane",1));
     }
 }
