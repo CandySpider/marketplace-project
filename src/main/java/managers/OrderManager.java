@@ -178,12 +178,12 @@ public class OrderManager {
         manageStuff.init();
         manageStuff.addJsonObj(experimentalOrder);
         manageStuff.addJsonObj(experimentalOrder);
-        //manageStuff.addJsonObj(new Order(5,1,2,"processing"));
-       // manageStuff.addJsonObj(new Order(7,1,3,"processing"));
-        //manageStuff.addJsonObj(new Order(8,2,3,"processing"));
-        //manageStuff.addJsonObj(new Order(9,3,3,"processing"));
-        int [] exp={0,1};
-        manageStuff.removeJsonArray(exp);
+        manageStuff.addJsonObj(new Order(5,1,2,"processing"));
+        manageStuff.addJsonObj(new Order(7,1,3,"processing"));
+        manageStuff.addJsonObj(new Order(8,2,3,"processing"));
+        manageStuff.addJsonObj(new Order(9,3,3,"processing"));
+//        int [] exp={0,1};
+//        manageStuff.removeJsonArray(exp);
         System.out.println(manageStuff.showAll());
 
 

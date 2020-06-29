@@ -4,8 +4,10 @@ import org.jetbrains.annotations.NotNull;
 import org.json.*;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 
 public class ClientManager {
@@ -50,22 +52,13 @@ public class ClientManager {
     indexAll();
     }
 
-    public void removeJsonObj (int i )
+    public void removeJsonObj (int i )  //removes based on the given id
     {
         try {
             String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
             JSONObject myObject = new JSONObject(contents);
             JSONArray myArray = myObject.getJSONArray("personalData");
 
-            //remove all the orders  , before removing the client
-
-//            OrderManager orderRemover = new OrderManager();
-//            JSONObject seeker = myArray.getJSONObject(i);
-//            String seekerString = seeker.get("clientId").toString();
-//            JSONArray remember = orderRemover.searchJsonObj(seekerString,1);
-
-
-            //
             int actualIndex=-1;
             for(int j=0;j<myArray.length();j++)
             {   JSONObject temp ;
@@ -79,6 +72,29 @@ public class ClientManager {
             }
             if(actualIndex==-1)
                 return;
+
+            //remove all the orders  , before removing the client
+
+               OrderManager orderRemover = new OrderManager();
+               JSONObject seeker = myArray.getJSONObject(actualIndex);
+               String seekerString = seeker.get("clientId").toString();
+               JSONArray remember = orderRemover.searchJsonObj(seekerString,1);
+
+               ArrayList<Integer> seekerArray = new ArrayList<>();
+
+               for(int value=0 ; value < remember.length();value++)
+               {
+                  seekerArray.add(Integer.parseInt(String.valueOf(remember.getJSONObject(value).get("orderId"))));
+               }
+               int []done = new int[seekerArray.size()];
+                for (int k=0 ; k<done.length;k++)
+                {
+                    done[k]= seekerArray.get(k);
+                }
+               orderRemover.removeJsonArray(done);
+
+            //
+
             myArray.remove(actualIndex);
             //System.out.println(myObject);
             PrintWriter writer = new PrintWriter(this.filePath);
