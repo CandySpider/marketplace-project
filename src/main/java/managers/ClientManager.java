@@ -4,7 +4,6 @@ import org.jetbrains.annotations.NotNull;
 import org.json.*;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -211,9 +210,9 @@ public class ClientManager {
     }
     public static void main(String[] argv)  {
             AESencryption encrypt = new AESencryption();
-            Client experimentalClient = new Client(1,"Ion","Castan","0756444890","Jud. PH,Oras. Bacanesti","youexp@gmail.com","xxDemonSlayerxx",encrypt.encrypt("gigel"),encrypt.encrypt("4485790854113695"));
-            Client experimentalClient2 = new Client(1,"Mihai","Corneliu","0782443890","Jud. Timis,Oras. Timisoara","youexp2@gmail.com","Bravo",encrypt.encrypt("idk12"),encrypt.encrypt("4539535904808240"));
-            Client experimentalClient3 = new Client(1,"Maria","Castan","0756420897","Jud. Timis,Oras. Bacanesti","youexp3@gmail.com","Aistil",encrypt.encrypt("whatev"),encrypt.encrypt("4680771904751761284"));
+            Client experimentalClient = new Client("Ion","Castan","0756444890","Jud. PH,Oras. Bacanesti","youexp@gmail.com","xxDemonSlayerxx",encrypt.encrypt("gigel"),encrypt.encrypt("4485790854113695"));
+            Client experimentalClient2 = new Client("Mihai","Corneliu","0782443890","Jud. Timis,Oras. Timisoara","youexp2@gmail.com","Bravo",encrypt.encrypt("idk12"),encrypt.encrypt("4539535904808240"));
+            Client experimentalClient3 = new Client("Maria","Castan","0756420897","Jud. Timis,Oras. Bacanesti","youexp3@gmail.com","Aistil",encrypt.encrypt("whatev"),encrypt.encrypt("4680771904751761284"));
 
             JSONObject iExp = new JSONObject(experimentalClient);
 
@@ -282,8 +281,7 @@ class Client {
         return cryptedCard;
     }
 
-    public Client(int clientId, String firstName, String lastName, String phoneNumber, String adress, String email, String username, String encryptedPassword, String cryptedCard) {
-        this.clientId = clientId;
+    public Client(String firstName, String lastName, String phoneNumber, String adress, String email, String username, String encryptedPassword, String cryptedCard) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;

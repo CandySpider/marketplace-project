@@ -167,14 +167,14 @@ public class ProductManager {
     }
     public static void main(String[] argv) {
 
-            Product experimentalProduct = new Product(45,0,"careProducts","Dyson Hair Curler",120,"automatic ceramic hair curler");
+            Product experimentalProduct = new Product(0,"careProducts","Dyson Hair Curler",120,"automatic ceramic hair curler");
 
             ProductManager manageStuff = new ProductManager();
             manageStuff.init();
             manageStuff.addJsonObj(experimentalProduct);
-            manageStuff.addJsonObj(new Product(2,0,"toys","Jucarie Mega",25,"Super faina!"));
-            manageStuff.addJsonObj(new Product(3,1,"tech","Telfon",40,"Iphone"));
-            manageStuff.addJsonObj(new Product(2,1,"food","Ciocolata",15,"Super faina!"));
+            manageStuff.addJsonObj(new Product(0,"toys","Jucarie Mega",25,"Super faina!"));
+            manageStuff.addJsonObj(new Product(1,"tech","Telfon",40,"Iphone"));
+            manageStuff.addJsonObj(new Product(2,"food","Ciocolata",15,"Super faina!"));
 //            int exp [] = {0,1,2,3};
 //            manageStuff.removeJsonArray(exp);
             System.out.println(manageStuff.showAll());
@@ -182,7 +182,7 @@ public class ProductManager {
 
     }
 
-    public static class Product {
+    public static class Product {  //if orderId = -1 => inStock , otherwise taken
         private int productId;
         private String name;
         private int quantity;
@@ -214,8 +214,7 @@ public class ProductManager {
             return description;
         }
 
-        public Product(int productId,int orderId,String category,String name, int quantity, String description) {
-            this.productId = productId;
+        public Product(int orderId,String category,String name, int quantity, String description) {
             this.orderId=orderId;
             this.category=category;
             this.name = name;
@@ -228,7 +227,7 @@ public class ProductManager {
         public String toString() {
             return "{" +
                     " \"productId\": " + productId +
-                    ", \"orderId\": "  + orderId  +
+                    ", \"orderId\": " +  "\"" + + orderId  +  "\"" +   // =-1 => inStock
                     ", \"category\": " + "\"" + category + "\"" +
                     ", \"name\": " + "\"" + name + "\"" +
                     ", \"quantity\": " + "\"" + quantity + "\"" +
