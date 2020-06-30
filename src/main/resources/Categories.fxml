@@ -12,14 +12,14 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="800.0" prefWidth="1300.0" styleClass="a1" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="r.controller.CategoriesController">
+<VBox fx:id="rootPane" prefHeight="800.0" prefWidth="1300.0" styleClass="a1" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="r.controller.CategoriesController">
     <stylesheets>
         <URL value="@style.css" />
     </stylesheets>
     <children>
         <HBox alignment="TOP_RIGHT" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="68.0" prefWidth="1300.0" styleClass="a1">
             <children>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" styleClass="a2">
+            <Button mnemonicParsing="false" onAction="#loadMainScene" prefHeight="25.0" prefWidth="35.0" styleClass="a2">
                <HBox.margin>
                   <Insets right="865.0" top="10.0" />
                </HBox.margin>
@@ -38,7 +38,7 @@
                 </TextField>
                 <Button mnemonicParsing="false" styleClass="bb">
                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" onMousePressed="#search" pickOnBounds="true" preserveRatio="true" styleClass="s">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" styleClass="s">
                             <image>
                                 <Image url="@search.png" />
                             </image>

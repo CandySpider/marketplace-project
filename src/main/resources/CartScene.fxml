@@ -11,16 +11,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="800.0" prefWidth="1300.0" styleClass="a1" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="r.controller.CartController">
+<VBox fx:id="rootPane" prefHeight="800.0" prefWidth="1300.0" styleClass="a1" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="r.controller.CartController">
     <stylesheets>
         <URL value="@style.css" />
     </stylesheets>
     <children>
-        <HBox alignment="TOP_RIGHT" prefHeight="46.0" prefWidth="1300.0" styleClass="a1">
+        <HBox alignment="TOP_RIGHT" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="46.0" prefWidth="1300.0" styleClass="a1">
             <children>
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" styleClass="a2">
+                <Button mnemonicParsing="false" onAction="#loadMainScene" prefHeight="25.0" prefWidth="35.0" styleClass="a2">
                     <HBox.margin>
-                        <Insets right="865.0" top="10.0" />
+                        <Insets right="1200.0" top="10.0" />
                     </HBox.margin>
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -64,7 +64,7 @@
             </VBox>
             <VBox alignment="BOTTOM_CENTER" prefHeight="755.0" prefWidth="504.0" styleClass="ss">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="52.0" prefWidth="106.0" styleClass="si" text="Checkout" />
+                  <Button mnemonicParsing="false" onAction="#loadMainScene" prefHeight="52.0" prefWidth="106.0" styleClass="si" text="Checkout" />
                </children>
                <HBox.margin>
                   <Insets />
