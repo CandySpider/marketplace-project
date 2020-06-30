@@ -1,10 +1,11 @@
-package p;
+package managers;
 
 import org.json.*;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 class Staff {
     private int staffId;
@@ -15,8 +16,7 @@ class Staff {
     private String encryptedPassword;
     private  float salary;
 
-    public Staff(int staffId, String firstName, String lastName, String email, String username, String encryptedPassword, float salary) {
-        this.staffId = staffId;
+    public Staff(String firstName, String lastName, String email, String username, String encryptedPassword, float salary) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -114,8 +114,45 @@ public class StaffManager {
             String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
             JSONObject myObject = new JSONObject(contents);
             JSONArray myArray = myObject.getJSONArray("personalData");
-            myArray.remove(i);
-            System.out.println(myObject);
+
+            int actualIndex=-1;
+            for(int j=0;j<myArray.length();j++)
+            {   JSONObject temp ;
+                temp=myArray.getJSONObject(j);
+                if(temp.get("staffId").equals(String.valueOf(i)))
+                {
+                    actualIndex = j;
+                    break;
+                }
+
+            }
+            if(actualIndex==-1)
+                return;
+
+            //remove all the orders  , before removing the staff
+
+            OrderManager orderRemover = new OrderManager();
+            JSONObject seeker = myArray.getJSONObject(actualIndex);
+            String seekerString = seeker.get("staffId").toString();
+            JSONArray remember = orderRemover.searchJsonObj(seekerString,2);
+
+            ArrayList<Integer> seekerArray = new ArrayList<>();
+
+            for(int value=0 ; value < remember.length();value++)
+            {
+                seekerArray.add(Integer.parseInt(String.valueOf(remember.getJSONObject(value).get("orderId"))));
+            }
+            int []done = new int[seekerArray.size()];
+            for (int k=0 ; k<done.length;k++)
+            {
+                done[k]= seekerArray.get(k);
+            }
+            orderRemover.removeJsonArray(done);
+
+            //
+
+            myArray.remove(actualIndex);
+            //System.out.println(myObject);
             PrintWriter writer = new PrintWriter(this.filePath);
             writer.print(myObject);
             writer.close();
@@ -123,6 +160,13 @@ public class StaffManager {
         catch (IOException e )
         {
             e.printStackTrace();
+        }
+
+    }
+    public void removeJsonArray (int[] inRemoval)
+    {
+        for (int value : inRemoval) {
+            removeJsonObj(value);
         }
         indexAll();
     }
@@ -132,7 +176,7 @@ public class StaffManager {
         JSONObject myObject = new JSONObject(contents);
         JSONArray myArray = myObject.getJSONArray("personalData");
         for (int i = 0; i < myArray.length(); i++) {
-            myArray.getJSONObject(i).put("staffId", i);
+            myArray.getJSONObject(i).put("staffId", String.valueOf(i));
         }
         PrintWriter writer = new PrintWriter(this.filePath);
         writer.print(myObject);
@@ -209,15 +253,18 @@ public class StaffManager {
     {
 
         AESencryption encrypt = new AESencryption();
-        Staff experimentalStaff = new Staff (1,"Marin","Costea","interzis@yahoo.com","mar23",encrypt.encrypt("nice"),2500);
-        Staff experimentalStaff2 = new Staff(1,"Ioana","Gheorghe","rockit@gmai.com","nope12",encrypt.encrypt("super"),4000);
-        Staff experimentalStaff3 =new Staff(1,"Jane","Daria","lol@gmail.com","Dar12",encrypt.encrypt("parolamea24"),3000);
+        Staff experimentalStaff = new Staff ("Marin","Costea","interzis@yahoo.com","mar23",encrypt.encrypt("nice"),2500);
+        Staff experimentalStaff2 = new Staff("Ioana","Gheorghe","rockit@gmai.com","nope12",encrypt.encrypt("super"),4000);
+        Staff experimentalStaff3 =new Staff("Jane","Daria","lol@gmail.com","Dar12",encrypt.encrypt("parolamea24"),3000);
         JSONObject initialExp = new JSONObject(experimentalStaff);
         StaffManager godManager = new StaffManager();
         godManager.init();
         godManager.addJsonObj(experimentalStaff);
         godManager.addJsonObj(experimentalStaff2);
         godManager.addJsonObj(experimentalStaff3);
-        System.out.println(godManager.searchJsonObj("Jane",1));
+        int []exp ={2};
+        godManager.removeJsonArray(exp);
+        System.out.println(godManager.showAll());
+        //System.out.println(godManager.searchJsonObj("Jane",1));
     }
 }

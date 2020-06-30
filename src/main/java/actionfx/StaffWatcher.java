@@ -1,9 +1,8 @@
 package actionfx;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonObjectFormatVisitor;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import r.*;
-import p.StaffManager;
+import managers.*;
+import managers.StaffManager;
 public class StaffWatcher {
     private JSONArray personalizedOrders = new JSONArray();  //we get all the orders for the current staff
     public StaffWatcher(String username)

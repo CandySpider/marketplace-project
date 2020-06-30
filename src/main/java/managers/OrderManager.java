@@ -1,15 +1,19 @@
-package r;
+package managers;
 
-import com.sun.corba.se.impl.resolver.ORBDefaultInitRefResolverImpl;
-import com.sun.org.apache.xpath.internal.operations.Or;
-import r.model.Order;
 import org.json.*;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class OrderManager {
     private String filePath;
+
+    public String getFilePath() {
+        return filePath;
+    }
+
     public OrderManager()
     {
         File testFile = new File("");
@@ -54,8 +58,45 @@ public class OrderManager {
             String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
             JSONObject myObject = new JSONObject(contents);
             JSONArray myArray = myObject.getJSONArray("personalData");
-            myArray.remove(i);
-            System.out.println(myObject);
+
+            int actualIndex=-1;
+            for(int j=0;j<myArray.length();j++)
+            {   JSONObject temp ;
+                temp=myArray.getJSONObject(j);
+                if(temp.get("orderId").equals(String.valueOf(i)))
+                {
+                    actualIndex = j;
+                    break;
+                }
+
+            }
+            if(actualIndex==-1)
+                return;
+
+            //remove all the products  , before removing the order
+
+            ProductManager productRemover = new ProductManager();
+            JSONObject seeker = myArray.getJSONObject(actualIndex);
+            String seekerString = seeker.get("orderId").toString();
+            JSONArray remember = productRemover.searchJsonObj(seekerString,2);
+
+            ArrayList<Integer> seekerArray = new ArrayList<>();
+
+            for(int value=0 ; value < remember.length();value++)
+            {
+                seekerArray.add(Integer.parseInt(String.valueOf(remember.getJSONObject(value).get("productId"))));
+            }
+            int []done = new int[seekerArray.size()];
+            for (int k=0 ; k<done.length;k++)
+            {
+                done[k]= seekerArray.get(k);
+            }
+            productRemover.removeJsonArray(done);
+
+            //
+
+            myArray.remove(actualIndex);
+            //System.out.println(myObject);
             PrintWriter writer = new PrintWriter(this.filePath);
             writer.print(myObject);
             writer.close();
@@ -63,6 +104,13 @@ public class OrderManager {
         catch (IOException e )
         {
             e.printStackTrace();
+        }
+
+    }
+    public void removeJsonArray (int[] inRemoval)
+    {
+        for (int value : inRemoval) {
+            removeJsonObj(value);
         }
         indexAll();
     }
@@ -72,7 +120,7 @@ public class OrderManager {
         JSONObject myObject = new JSONObject(contents);
         JSONArray myArray = myObject.getJSONArray("personalData");
         for (int i = 0; i < myArray.length(); i++) {
-            myArray.getJSONObject(i).put("orderId", i);
+            myArray.getJSONObject(i).put("orderId",String.valueOf(i) ) ;
         }
         PrintWriter writer = new PrintWriter(this.filePath);
         writer.print(myObject);
@@ -82,6 +130,18 @@ public class OrderManager {
     {
         e.printStackTrace();
     }
+    }
+
+    public JSONArray showAll ()
+    { JSONArray myArray=new JSONArray();
+        try {
+            String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
+            JSONObject myObject = new JSONObject(contents);
+            myArray = myObject.getJSONArray("personalData");
+
+        }catch (IOException e)
+        {e.printStackTrace();}
+        return myArray;
     }
 
     public JSONArray searchJsonObj (String searchFor , int choose )  // 1-clientId 2-staffId 3-status
@@ -130,21 +190,60 @@ public class OrderManager {
 
     public static void main(String[] argv) {
 
-        Order experimentalOrder = new Order(30,1,1,"done");
+        Order experimentalOrder = new Order(1,1,"done");
         JSONObject iExp = new JSONObject(experimentalOrder);
 
         OrderManager manageStuff = new OrderManager();
         manageStuff.init();
         manageStuff.addJsonObj(experimentalOrder);
         manageStuff.addJsonObj(experimentalOrder);
-        manageStuff.addJsonObj(new Order(5,1,2,"processing"));
-        manageStuff.addJsonObj(new Order(7,1,3,"processing"));
-        manageStuff.addJsonObj(new Order(8,2,3,"processing"));
-        manageStuff.addJsonObj(new Order(9,3,3,"processing"));
-        System.out.println(manageStuff.searchJsonObj("processing",3));
+        int []exp = {0,1};
+        manageStuff.removeJsonArray(exp);
+        System.out.println(manageStuff.showAll());
 
 
 
 
+
+    }
+
+    public static class Order {
+        private int orderId;
+        private int clientId;
+        private int staffId;
+        private String status;
+
+
+        public int getOrderId() {
+            return orderId;
+        }
+
+        public int getClientId() {
+            return clientId;
+        }
+
+        public int getStaffId() {
+            return staffId;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public Order(int clientId, int staffId, String status) {
+            this.clientId = clientId;
+            this.staffId = staffId;
+            this.status = status;
+        }
+
+        @Override
+        public String toString() {
+            return "{" +
+                    " \"orderId\": " + orderId +
+                    ", \"clientId\": " + "\"" + clientId + "\"" +
+                    ", \"staffId\": " + "\"" + staffId + "\"" +
+                    ", \"status\": " + "\"" + status + "\""  +
+                    '}';
+        }
     }
 }

@@ -1,9 +1,9 @@
 package actionfx;
 
 import org.json.JSONArray;
-import p.JsonManager;
-import p.StaffManager;
-import r.ProductManager;
+import managers.ClientManager;
+import managers.StaffManager;
+import managers.ProductManager;
 
 public class Administrator {
     public JSONArray showAllStaff ()
@@ -13,7 +13,7 @@ public class Administrator {
     }
     public  JSONArray showAllClients()
     {
-        JsonManager unique = new JsonManager();
+        ClientManager unique = new ClientManager();
         return unique.showAll();
     }
     public  JSONArray showAllProducts()

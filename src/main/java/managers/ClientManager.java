@@ -1,86 +1,18 @@
-package p;
+package managers;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.*;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
-class Client {
-    private int clientId;
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
-    private String adress;
-    private String email;
-    private String username;
-    private String encryptedPassword;
-    private String cryptedCard;
 
-    public int getClientId() {
-        return clientId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getAdress() {
-        return adress;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getCryptedCard() {
-        return cryptedCard;
-    }
-
-    public Client(int clientId, String firstName, String lastName, String phoneNumber, String adress, String email, String username, String encryptedPassword, String cryptedCard) {
-        this.clientId = clientId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.adress = adress;
-        this.email = email;
-        this.username = username;
-        this.encryptedPassword = encryptedPassword;
-        this.cryptedCard=cryptedCard;
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                " \"clientId\": " +  clientId +
-                ", \"firstName\": " + "\"" + firstName + "\"" +
-                ", \"lastName\": " + "\"" + lastName + "\""  +
-                ", \"phoneNumber\": " + "\"" + phoneNumber + "\"" +
-                ", \"adress\": " + "\"" + adress + "\""  +
-                ", \"email\": " + "\"" + email  + "\"" +
-                ", \"username\": " + "\"" + username  + "\"" +
-                ", \"encryptedPassword\": " + "\"" + encryptedPassword  + "\"" +
-                ", \"cryptedCard\": " + "\"" + cryptedCard  + "\"" +
-                '}';
-    }
-}
-
-public class JsonManager {
+public class ClientManager {
     private String filePath;
     private int customerCount=0 ;
-    public JsonManager ()
+    public ClientManager()
     {
         File testFile = new File("");
         String currentPath = testFile.getAbsolutePath();             //magic spell for finding the path
@@ -101,7 +33,7 @@ public class JsonManager {
             e.printStackTrace();
         }
     }
-    public void addJsonObj (Client theOne)
+    public void addJsonObj (@NotNull Client theOne)
     { try {
         String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
         JSONObject myObject = new JSONObject(contents);
@@ -119,14 +51,51 @@ public class JsonManager {
     indexAll();
     }
 
-    public void removeJsonObj (int i )
+    public void removeJsonObj (int i )  //removes based on the given id
     {
         try {
             String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
             JSONObject myObject = new JSONObject(contents);
             JSONArray myArray = myObject.getJSONArray("personalData");
-            myArray.remove(i);
-            System.out.println(myObject);
+
+            int actualIndex=-1;
+            for(int j=0;j<myArray.length();j++)
+            {   JSONObject temp ;
+                temp=myArray.getJSONObject(j);
+                if(temp.get("clientId").equals(String.valueOf(i)))
+                {
+                    actualIndex = j;
+                    break;
+                }
+
+            }
+            if(actualIndex==-1)
+                return;
+
+            //remove all the orders  , before removing the client
+
+               OrderManager orderRemover = new OrderManager();
+               JSONObject seeker = myArray.getJSONObject(actualIndex);
+               String seekerString = seeker.get("clientId").toString();
+               JSONArray remember = orderRemover.searchJsonObj(seekerString,1);
+
+               ArrayList<Integer> seekerArray = new ArrayList<>();
+
+               for(int value=0 ; value < remember.length();value++)
+               {
+                  seekerArray.add(Integer.parseInt(String.valueOf(remember.getJSONObject(value).get("orderId"))));
+               }
+               int []done = new int[seekerArray.size()];
+                for (int k=0 ; k<done.length;k++)
+                {
+                    done[k]= seekerArray.get(k);
+                }
+               orderRemover.removeJsonArray(done);
+
+            //
+
+            myArray.remove(actualIndex);
+            //System.out.println(myObject);
             PrintWriter writer = new PrintWriter(this.filePath);
             writer.print(myObject);
             writer.close();
@@ -134,6 +103,13 @@ public class JsonManager {
         catch (IOException e )
         {
             e.printStackTrace();
+        }
+
+    }
+    public void removeJsonArray (int[] inRemoval)
+    {
+        for (int value : inRemoval) {
+            removeJsonObj(value);
         }
         indexAll();
     }
@@ -143,7 +119,7 @@ public class JsonManager {
         JSONObject myObject = new JSONObject(contents);
         JSONArray myArray = myObject.getJSONArray("personalData");
         for (int i = 0; i < myArray.length(); i++) {
-            myArray.getJSONObject(i).put("clientId", i);
+            myArray.getJSONObject(i).put("clientId", String.valueOf(i));
         }
         PrintWriter writer = new PrintWriter(this.filePath);
         writer.print(myObject);
@@ -234,27 +210,100 @@ public class JsonManager {
     }
     public static void main(String[] argv)  {
             AESencryption encrypt = new AESencryption();
-            Client experimentalClient = new Client(1,"Ion","Castan","0756444890","Jud. PH,Oras. Bacanesti","youexp@gmail.com","xxDemonSlayerxx",encrypt.encrypt("gigel"),encrypt.encrypt("4485790854113695"));
-            Client experimentalClient2 = new Client(1,"Mihai","Corneliu","0782443890","Jud. Timis,Oras. Timisoara","youexp2@gmail.com","Bravo",encrypt.encrypt("idk12"),encrypt.encrypt("4539535904808240"));
-            Client experimentalClient3 = new Client(1,"Maria","Castan","0756420897","Jud. Timis,Oras. Bacanesti","youexp3@gmail.com","Aistil",encrypt.encrypt("whatev"),encrypt.encrypt("4680771904751761284"));
+            Client experimentalClient = new Client("Ion","Castan","0756444890","Jud. PH,Oras. Bacanesti","youexp@gmail.com","xxDemonSlayerxx",encrypt.encrypt("gigel"),encrypt.encrypt("4485790854113695"));
+            Client experimentalClient2 = new Client("Mihai","Corneliu","0782443890","Jud. Timis,Oras. Timisoara","youexp2@gmail.com","Bravo",encrypt.encrypt("idk12"),encrypt.encrypt("4539535904808240"));
+            Client experimentalClient3 = new Client("Maria","Castan","0756420897","Jud. Timis,Oras. Bacanesti","youexp3@gmail.com","Aistil",encrypt.encrypt("whatev"),encrypt.encrypt("4680771904751761284"));
 
             JSONObject iExp = new JSONObject(experimentalClient);
 
-            JsonManager manageStuff = new JsonManager();
+            ClientManager manageStuff = new ClientManager();
             manageStuff.init();
             manageStuff.addJsonObj(experimentalClient);
             manageStuff.addJsonObj(experimentalClient);
             manageStuff.addJsonObj(experimentalClient2);
-            manageStuff.addJsonObj(experimentalClient3);
-            System.out.println(manageStuff.searchJsonObj("Ion",1));
-            System.out.println();
-            System.out.println();
+//            manageStuff.removeJsonObj(2);
+//            System.out.println(manageStuff.showAll());
+            //manageStuff.addJsonObj(experimentalClient3);
+            int []exp = {0,1,2};
+            manageStuff.removeJsonArray(exp);
 
-            System.out.println();
-
-
-
+            System.out.println(manageStuff.showAll());
 
 
+
+
+
+
+    }
+}
+
+
+class Client {
+    private int clientId;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private String adress;
+    private String email;
+    private String username;
+    private String encryptedPassword;
+    private String cryptedCard;
+
+    public int getClientId() {
+        return clientId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getAdress() {
+        return adress;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getCryptedCard() {
+        return cryptedCard;
+    }
+
+    public Client(String firstName, String lastName, String phoneNumber, String adress, String email, String username, String encryptedPassword, String cryptedCard) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.adress = adress;
+        this.email = email;
+        this.username = username;
+        this.encryptedPassword = encryptedPassword;
+        this.cryptedCard=cryptedCard;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                " \"clientId\": " + clientId +
+                ", \"firstName\": " + "\"" + firstName + "\"" +
+                ", \"lastName\": " + "\"" + lastName + "\""  +
+                ", \"phoneNumber\": " + "\"" + phoneNumber + "\"" +
+                ", \"adress\": " + "\"" + adress + "\""  +
+                ", \"email\": " + "\"" + email  + "\"" +
+                ", \"username\": " + "\"" + username  + "\"" +
+                ", \"encryptedPassword\": " + "\"" + encryptedPassword  + "\"" +
+                ", \"cryptedCard\": " + "\"" + cryptedCard  + "\"" +
+                '}';
     }
 }
