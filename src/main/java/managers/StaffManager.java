@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class StaffManager {
     private String filePath;
     private int staffCount=0 ;
+    public String getFilePath() {return this.filePath;}
     public StaffManager ()
     {
         File testFile = new File("");
@@ -210,7 +211,7 @@ public class StaffManager {
         //System.out.println(godManager.searchJsonObj("Jane",1));
     }
 
-    static class Staff {
+    public static class Staff {
         private int staffId;
         private String firstName;
         private String lastName;

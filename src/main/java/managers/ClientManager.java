@@ -14,6 +14,7 @@ import java.util.Objects;
 public class ClientManager {
     private String filePath;
     private int customerCount = 0 ;
+    public String getFilePath() {return this.filePath;};
     public ClientManager()
     {
         File testFile = new File("");
@@ -267,7 +268,7 @@ public class ClientManager {
 
     }
 
-    static class Client {
+    public static class Client {
         private int clientId;
         private String firstName;
         private String lastName;

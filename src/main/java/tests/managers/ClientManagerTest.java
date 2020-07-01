@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ClientManagerTest {
+ public class ClientManagerTest {
     private JSONObject saverUnit;
     @BeforeEach
     void setUp() throws IOException {
