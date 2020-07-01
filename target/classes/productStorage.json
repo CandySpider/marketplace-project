@@ -1,1 +1,40 @@
-{"product":[{"quantity":"120","productId":"0","orderId":0,"name":"Dyson Hair Curler","description":"automatic ceramic hair curler","category":"careProducts"},{"quantity":"25","productId":"1","orderId":0,"name":"Jucarie Mega","description":"Super faina!","category":"toys"},{"quantity":"40","productId":"2","orderId":1,"name":"Telfon","description":"Iphone","category":"tech"},{"quantity":"15","productId":"3","orderId":1,"name":"Ciocolata","description":"Super faina!","category":"food"}]}
+{
+  "product": [
+    {
+      "quantity": "120",
+      "productId": "0",
+      "orderId": "0",
+      "price": "249.99",
+      "name": "Dyson Hair Curler",
+      "description": "automatic ceramic hair curler",
+      "category": "ac"
+    },
+    {
+      "quantity": "25",
+      "productId": "1",
+      "orderId": "0",
+      "price": "12.99",
+      "name": "Jucarie Mega",
+      "description": "Super faina!",
+      "category": "acc"
+    },
+    {
+      "quantity": "40",
+      "productId": "2",
+      "orderId": "1",
+      "price": "299.99",
+      "name": "Telefon",
+      "description": "Iphone",
+      "category": "phone"
+    },
+    {
+      "quantity": "15",
+      "productId": "3",
+      "orderId": "2",
+      "price": "14.99",
+      "name": "Ciocolata",
+      "description": "Super faina!",
+      "category": "home"
+    }
+  ]
+}
