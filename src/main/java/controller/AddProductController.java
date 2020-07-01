@@ -1,14 +1,23 @@
-package r.controller;
+package controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class AddProductController {
     double x = 0;
     double y = 0;
 
+    @FXML
+    private VBox rootPane;
 
     @FXML
     void dragged(MouseEvent event) {
@@ -28,6 +37,13 @@ public class AddProductController {
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.close();
     }
+    @FXML
+    void loadStaffScene(ActionEvent event) throws IOException {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        Parent viewUI = FXMLLoader.load(getClass().getClassLoader().getResource("StaffScene.fxml"));
+        Scene scene = new Scene(viewUI);
 
+        stage.setScene(scene);
+    }
 
 }

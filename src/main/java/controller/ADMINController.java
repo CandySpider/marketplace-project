@@ -1,4 +1,4 @@
-package r.controller;
+package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,10 +12,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class CategoriesController {
+public class ADMINController {
     double x = 0;
     double y = 0;
-
     @FXML
     private VBox rootPane;
 
@@ -46,5 +45,4 @@ public class CategoriesController {
 
         stage.setScene(scene);
     }
-
 }
