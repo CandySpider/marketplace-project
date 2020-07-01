@@ -8,6 +8,11 @@ import java.nio.file.Paths;
 
 public class ProductManager {
     private String filePath;
+
+    public  String getFilePath()
+    {
+        return this.filePath;
+    }
     public ProductManager()
     {
         File testFile = new File("");

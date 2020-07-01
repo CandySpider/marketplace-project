@@ -2,7 +2,6 @@ package tests.managers;
 
 import managers.AESencryption;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class AESencryptionTest {
