@@ -178,7 +178,7 @@ public class ProductManager {
             manageStuff.init();
             manageStuff.addJsonObj(experimentalProduct);
             manageStuff.addJsonObj(new Product(0,"toys","Jucarie Mega",12.99,25,"Super faina!"));
-            manageStuff.addJsonObj(new Product(1,"tech","Telefon",299.99,40,"Iphone"));
+            manageStuff.addJsonObj(new Product(1,"phone","Telefon",299.99,40,"Iphone"));
             manageStuff.addJsonObj(new Product(2,"food","Ciocolata",14.99,15,"Super faina!"));
 //            int exp [] = {0,1,2,3};
 //            manageStuff.removeJsonArray(exp);

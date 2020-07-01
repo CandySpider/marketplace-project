@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>org.example</groupId>
     <artifactId>marketplace1</artifactId>
     <version>1.0-SNAPSHOT</version>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-junit</artifactId>
+            <version>4.0.15-alpha</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -49,16 +62,9 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.7.0-M1</version>
+            <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.webjars.npm/utf-8-validate -->
-        <dependency>
-            <groupId>org.webjars.npm</groupId>
-            <artifactId>utf-8-validate</artifactId>
-            <version>1.2.1</version>
-        </dependency>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -80,75 +86,49 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>7</source>
+                    <target>7</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>3.7.1</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.4.1</version>
+                <configuration>
+                    <finalName>marketplace</finalName>
+                    <!-- get all project dependencies -->
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <!-- MainClass in mainfest make a executable jar -->
+                    <archive>
+                        <manifest>
+                            <mainClass>Main</mainClass>
+                        </manifest>
+                    </archive>
+                    <appendAssemblyId>false</appendAssemblyId>
+                </configuration>
                 <executions>
                     <execution>
-                        <phase>test</phase>
+                        <id>make-assembly</id>
+                        <!-- bind to the packaging phase -->
+                        <phase>package</phase>
                         <goals>
-                            <goal>resources</goal>
-                            <goal>testResources</goal>
+                            <goal>single</goal>
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.7</version>
-            </plugin>
-
-
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.3</version>
-                <executions>
-                    <execution>
-                        <id>prepare-agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>post-unit-test</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                        <configuration>
-                            <!-- Sets the path to the file which contains the execution data. -->
-
-                            <dataFile>target/jacoco.exec</dataFile>
-                            <!-- Sets the output directory for the code coverage report. -->
-                            <outputDirectory>target/my-reports</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-
             </plugin>
         </plugins>
     </build>
+    <repositories>
+        <repository>
+            <id>snapshots</id>
+            <name>libs-snapshot</name>
+            <url>https://oss.jfrog.org/artifactory/libs-snapshot</url>
+        </repository>
+    </repositories>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
