@@ -7,64 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-class Staff {
-    private int staffId;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String username;
-    private String encryptedPassword;
-    private  float salary;
-
-    public Staff(String firstName, String lastName, String email, String username, String encryptedPassword, float salary) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.username = username;
-        this.encryptedPassword = encryptedPassword;
-        this.salary = salary;
-    }
-
-    public float getSalary() {
-        return salary;
-    }
-
-    public int getStaffId() {
-        return staffId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-
-    @Override
-    public String toString() {
-        return "{" +
-                " \"staffId\": " +  staffId +
-                ", \"firstName\": " + "\"" + firstName + "\"" +
-                ", \"lastName\": " + "\"" + lastName + "\""  +
-                ", \"email\": " + "\"" + email  + "\"" +
-                ", \"username\": " + "\"" + username  + "\"" +
-                ", \"encryptedPassword\": " + "\"" + encryptedPassword  + "\"" +
-                ", \"salary\": " + "\"" + salary  + "\"" +
-                '}';
-    }
-}
-
-
 
 public class StaffManager {
     private String filePath;
@@ -266,5 +208,62 @@ public class StaffManager {
         godManager.removeJsonArray(exp);
         System.out.println(godManager.showAll());
         //System.out.println(godManager.searchJsonObj("Jane",1));
+    }
+
+    static class Staff {
+        private int staffId;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String username;
+        private String encryptedPassword;
+        private  float salary;
+
+        public Staff(String firstName, String lastName, String email, String username, String encryptedPassword, float salary) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.email = email;
+            this.username = username;
+            this.encryptedPassword = encryptedPassword;
+            this.salary = salary;
+        }
+
+        public float getSalary() {
+            return salary;
+        }
+
+        public int getStaffId() {
+            return staffId;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+
+        @Override
+        public String toString() {
+            return "{" +
+                    " \"staffId\": " +  staffId +
+                    ", \"firstName\": " + "\"" + firstName + "\"" +
+                    ", \"lastName\": " + "\"" + lastName + "\""  +
+                    ", \"email\": " + "\"" + email  + "\"" +
+                    ", \"username\": " + "\"" + username  + "\"" +
+                    ", \"encryptedPassword\": " + "\"" + encryptedPassword  + "\"" +
+                    ", \"salary\": " + "\"" + salary  + "\"" +
+                    '}';
+        }
     }
 }

@@ -1,5 +1,6 @@
 package managers;
 
+import exceptions.UsernameDoesNotAlreadyExistsException;
 import org.jetbrains.annotations.NotNull;
 import org.json.*;
 
@@ -7,11 +8,12 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class ClientManager {
     private String filePath;
-    private int customerCount=0 ;
+    private int customerCount = 0 ;
     public ClientManager()
     {
         File testFile = new File("");
@@ -58,8 +60,8 @@ public class ClientManager {
             JSONObject myObject = new JSONObject(contents);
             JSONArray myArray = myObject.getJSONArray("personalData");
 
-            int actualIndex=-1;
-            for(int j=0;j<myArray.length();j++)
+            int actualIndex = -1;
+            for(int j = 0; j < myArray.length() ; j++)
             {   JSONObject temp ;
                 temp=myArray.getJSONObject(j);
                 if(temp.get("clientId").equals(String.valueOf(i)))
@@ -69,7 +71,7 @@ public class ClientManager {
                 }
 
             }
-            if(actualIndex==-1)
+            if(actualIndex == -1)
                 return;
 
             //remove all the orders  , before removing the client
@@ -81,12 +83,12 @@ public class ClientManager {
 
                ArrayList<Integer> seekerArray = new ArrayList<>();
 
-               for(int value=0 ; value < remember.length();value++)
+               for(int value = 0 ; value < remember.length() ; value++)
                {
                   seekerArray.add(Integer.parseInt(String.valueOf(remember.getJSONObject(value).get("orderId"))));
                }
                int []done = new int[seekerArray.size()];
-                for (int k=0 ; k<done.length;k++)
+                for (int k = 0 ; k < done.length ; k++)
                 {
                     done[k]= seekerArray.get(k);
                 }
@@ -139,7 +141,7 @@ public class ClientManager {
         switch (choose)
         {
             case 1:
-                for(int i=0;i<myArray.length();i++) {
+                for(int i = 0; i < myArray.length() ; i++) {
                     JSONObject temp = (JSONObject) myArray.get(i);
 
                     if (temp.get("firstName").equals(searchFor))
@@ -147,7 +149,7 @@ public class ClientManager {
                 }
                 break;
             case 2:
-                for(int i=0;i<myArray.length();i++) {
+                for(int i = 0; i < myArray.length() ; i++) {
                     JSONObject temp = (JSONObject) myArray.get(i);
 
                     if (temp.get("lastName").equals(searchFor))
@@ -155,7 +157,7 @@ public class ClientManager {
                 }
                 break;
             case 3:
-                for(int i=0;i<myArray.length();i++) {
+                for(int i = 0; i < myArray.length() ; i++) {
                     JSONObject temp = (JSONObject) myArray.get(i);
 
                     if (temp.get("phoneNumber").equals(searchFor))
@@ -163,15 +165,15 @@ public class ClientManager {
                 }
                 break;
             case 4:
-                for(int i=0;i<myArray.length();i++) {
+                for(int i = 0; i < myArray.length() ; i++) {
                     JSONObject temp = (JSONObject) myArray.get(i);
 
-                    if (temp.get("adress").equals(searchFor))
+                    if (temp.get("address").equals(searchFor))
                         totalJsons.put(temp);
                 }
                 break;
             case  5:
-                for(int i=0;i<myArray.length();i++) {
+                for(int i = 0; i <myArray.length() ; i++) {
                     JSONObject temp = (JSONObject) myArray.get(i);
 
                     if (temp.get("email").equals(searchFor))
@@ -179,7 +181,7 @@ public class ClientManager {
                 }
                 break;
             case 6:
-                for(int i=0;i<myArray.length();i++) {
+                for(int i = 0; i < myArray.length() ; i++) {
                     JSONObject temp = (JSONObject) myArray.get(i);
 
                     if (temp.get("username").equals(searchFor))
@@ -197,6 +199,35 @@ public class ClientManager {
 
 
     }
+    private static void checkUserAlreadyExist(String username, String password) throws UsernameDoesNotAlreadyExistsException { //checks whether there is such user in the database
+        boolean t = false;
+        String filePath2;
+        AESencryption crypt = new AESencryption();
+        String contents = null;
+        try {
+            File testFile = new File("");
+            String currentPath = testFile.getAbsolutePath();
+            filePath2  = currentPath+"/src/main/resources/customerStorage.json";
+
+            contents = new String((Files.readAllBytes(Paths.get(filePath2))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        JSONObject myObject = new JSONObject(contents);
+        JSONArray myArray = myObject.getJSONArray("personalData");
+        for(int i = 0; i < myArray.length() ; i++) {
+            JSONObject temp = (JSONObject) myArray.get(i);
+
+            if (temp.get("username").equals(username) && Objects.equals(temp.get("encryptedPassword"),crypt.encrypt(password)))
+                t = true;
+        }
+        if(!t)
+            throw new UsernameDoesNotAlreadyExistsException(username);
+    }
+    public static void verifyAccount(String username, String password) throws UsernameDoesNotAlreadyExistsException {
+        checkUserAlreadyExist(username,password);
+    }
+
     public JSONArray showAll ()
     { JSONArray myArray=new JSONArray();
         try {
@@ -224,8 +255,8 @@ public class ClientManager {
 //            manageStuff.removeJsonObj(2);
 //            System.out.println(manageStuff.showAll());
             //manageStuff.addJsonObj(experimentalClient3);
-            int []exp = {0,1,2};
-            manageStuff.removeJsonArray(exp);
+            //int []exp = {0,1,2};
+            //manageStuff.removeJsonArray(exp);
 
             System.out.println(manageStuff.showAll());
 
@@ -235,75 +266,76 @@ public class ClientManager {
 
 
     }
+
+    static class Client {
+        private int clientId;
+        private String firstName;
+        private String lastName;
+        private String phoneNumber;
+        private String address;
+        private String email;
+        private String username;
+        private String encryptedPassword;
+        private String encryptedCard;
+
+        public int getClientId() {
+            return clientId;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public String getPhoneNumber() {
+            return phoneNumber;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public String getEncryptedCard() {
+            return encryptedCard;
+        }
+
+        public Client(String firstName, String lastName, String phoneNumber, String address, String email, String username, String encryptedPassword, String encryptedCard) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.phoneNumber = phoneNumber;
+            this.address = address;
+            this.email = email;
+            this.username = username;
+            this.encryptedPassword = encryptedPassword;
+            this.encryptedCard = encryptedCard;
+        }
+
+        @Override
+        public String toString() {
+            return "{" +
+                    " \"clientId\": " + clientId +
+                    ", \"firstName\": " + "\"" + firstName + "\"" +
+                    ", \"lastName\": " + "\"" + lastName + "\""  +
+                    ", \"phoneNumber\": " + "\"" + phoneNumber + "\"" +
+                    ", \"address\": " + "\"" + address + "\""  +
+                    ", \"email\": " + "\"" + email  + "\"" +
+                    ", \"username\": " + "\"" + username  + "\"" +
+                    ", \"encryptedPassword\": " + "\"" + encryptedPassword  + "\"" +
+                    ", \"encryptedCard\": " + "\"" + encryptedCard  + "\"" +
+                    '}';
+        }
+    }
 }
 
 
-class Client {
-    private int clientId;
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
-    private String adress;
-    private String email;
-    private String username;
-    private String encryptedPassword;
-    private String cryptedCard;
-
-    public int getClientId() {
-        return clientId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getAdress() {
-        return adress;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getCryptedCard() {
-        return cryptedCard;
-    }
-
-    public Client(String firstName, String lastName, String phoneNumber, String adress, String email, String username, String encryptedPassword, String cryptedCard) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.adress = adress;
-        this.email = email;
-        this.username = username;
-        this.encryptedPassword = encryptedPassword;
-        this.cryptedCard=cryptedCard;
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                " \"clientId\": " + clientId +
-                ", \"firstName\": " + "\"" + firstName + "\"" +
-                ", \"lastName\": " + "\"" + lastName + "\""  +
-                ", \"phoneNumber\": " + "\"" + phoneNumber + "\"" +
-                ", \"adress\": " + "\"" + adress + "\""  +
-                ", \"email\": " + "\"" + email  + "\"" +
-                ", \"username\": " + "\"" + username  + "\"" +
-                ", \"encryptedPassword\": " + "\"" + encryptedPassword  + "\"" +
-                ", \"cryptedCard\": " + "\"" + cryptedCard  + "\"" +
-                '}';
-    }
-}
