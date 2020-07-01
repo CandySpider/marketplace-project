@@ -11,12 +11,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="800.0" prefWidth="1300.0" styleClass="a1" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="r.controller.AddProductController">
+<VBox fx:id="rootPane" prefHeight="800.0" prefWidth="1300.0" styleClass="a1" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddProductController">
     <stylesheets>
         <URL value="@style.css" />
     </stylesheets>
     <children>
-        <HBox alignment="TOP_RIGHT" prefHeight="46.0" prefWidth="1300.0" styleClass="a1">
+        <HBox alignment="TOP_RIGHT" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="46.0" prefWidth="1300.0" styleClass="a1">
             <children>
                 <Button mnemonicParsing="false" onMouseClicked="#close" prefWidth="30.0" styleClass="a2">
                     <graphic>
@@ -78,7 +78,7 @@
                               <Insets right="20.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="119.0" styleClass="si" text="Cancel" />
+                        <Button mnemonicParsing="false" onAction="#loadStaffScene" prefHeight="34.0" prefWidth="119.0" styleClass="si" text="Cancel" />
                      </children>
                   </HBox>
                     </children>
