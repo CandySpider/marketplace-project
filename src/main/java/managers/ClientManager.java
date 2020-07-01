@@ -12,6 +12,11 @@ import java.util.ArrayList;
 public class ClientManager {
     private String filePath;
     private int customerCount=0 ;
+
+    public String getFilePath ()
+    {
+        return this.filePath;
+    }
     public ClientManager()
     {
         File testFile = new File("");
@@ -224,86 +229,91 @@ public class ClientManager {
 //            manageStuff.removeJsonObj(2);
 //            System.out.println(manageStuff.showAll());
             //manageStuff.addJsonObj(experimentalClient3);
-            int []exp = {0,1,2};
-            manageStuff.removeJsonArray(exp);
+//            int []exp = {0,1,2};
+//            manageStuff.removeJsonArray(exp);
 
-            System.out.println(manageStuff.showAll());
+            String x1 = manageStuff.showAll().toString();
+            String x2 = manageStuff.showAll().toString();
+            if(x1.equals(x2))
+                System.out.println("YES!");
 
 
 
 
 
 
+    }
+
+
+    public static class Client {
+        private int clientId;
+        private String firstName;
+        private String lastName;
+        private String phoneNumber;
+        private String adress;
+        private String email;
+        private String username;
+        private String encryptedPassword;
+        private String cryptedCard;
+
+        public int getClientId() {
+            return clientId;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public String getPhoneNumber() {
+            return phoneNumber;
+        }
+
+        public String getAdress() {
+            return adress;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public String getCryptedCard() {
+            return cryptedCard;
+        }
+
+        public Client(String firstName, String lastName, String phoneNumber, String adress, String email, String username, String encryptedPassword, String cryptedCard) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.phoneNumber = phoneNumber;
+            this.adress = adress;
+            this.email = email;
+            this.username = username;
+            this.encryptedPassword = encryptedPassword;
+            this.cryptedCard=cryptedCard;
+        }
+
+        @Override
+        public String toString() {
+            return "{" +
+                    " \"clientId\": " + clientId +
+                    ", \"firstName\": " + "\"" + firstName + "\"" +
+                    ", \"lastName\": " + "\"" + lastName + "\""  +
+                    ", \"phoneNumber\": " + "\"" + phoneNumber + "\"" +
+                    ", \"adress\": " + "\"" + adress + "\""  +
+                    ", \"email\": " + "\"" + email  + "\"" +
+                    ", \"username\": " + "\"" + username  + "\"" +
+                    ", \"encryptedPassword\": " + "\"" + encryptedPassword  + "\"" +
+                    ", \"cryptedCard\": " + "\"" + cryptedCard  + "\"" +
+                    '}';
+        }
     }
 }
 
 
-class Client {
-    private int clientId;
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
-    private String adress;
-    private String email;
-    private String username;
-    private String encryptedPassword;
-    private String cryptedCard;
-
-    public int getClientId() {
-        return clientId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getAdress() {
-        return adress;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getCryptedCard() {
-        return cryptedCard;
-    }
-
-    public Client(String firstName, String lastName, String phoneNumber, String adress, String email, String username, String encryptedPassword, String cryptedCard) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.adress = adress;
-        this.email = email;
-        this.username = username;
-        this.encryptedPassword = encryptedPassword;
-        this.cryptedCard=cryptedCard;
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                " \"clientId\": " + clientId +
-                ", \"firstName\": " + "\"" + firstName + "\"" +
-                ", \"lastName\": " + "\"" + lastName + "\""  +
-                ", \"phoneNumber\": " + "\"" + phoneNumber + "\"" +
-                ", \"adress\": " + "\"" + adress + "\""  +
-                ", \"email\": " + "\"" + email  + "\"" +
-                ", \"username\": " + "\"" + username  + "\"" +
-                ", \"encryptedPassword\": " + "\"" + encryptedPassword  + "\"" +
-                ", \"cryptedCard\": " + "\"" + cryptedCard  + "\"" +
-                '}';
-    }
-}

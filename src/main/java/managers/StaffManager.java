@@ -7,68 +7,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-class Staff {
-    private int staffId;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String username;
-    private String encryptedPassword;
-    private  float salary;
-
-    public Staff(String firstName, String lastName, String email, String username, String encryptedPassword, float salary) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.username = username;
-        this.encryptedPassword = encryptedPassword;
-        this.salary = salary;
-    }
-
-    public float getSalary() {
-        return salary;
-    }
-
-    public int getStaffId() {
-        return staffId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-
-    @Override
-    public String toString() {
-        return "{" +
-                " \"staffId\": " +  staffId +
-                ", \"firstName\": " + "\"" + firstName + "\"" +
-                ", \"lastName\": " + "\"" + lastName + "\""  +
-                ", \"email\": " + "\"" + email  + "\"" +
-                ", \"username\": " + "\"" + username  + "\"" +
-                ", \"encryptedPassword\": " + "\"" + encryptedPassword  + "\"" +
-                ", \"salary\": " + "\"" + salary  + "\"" +
-                '}';
-    }
-}
-
-
 
 public class StaffManager {
     private String filePath;
-    private int staffCount=0 ;
+    private int staffCount=0;
+    public String getFilePath()
+    {
+        return this.filePath;
+    }
     public StaffManager ()
     {
         File testFile = new File("");
@@ -256,7 +202,6 @@ public class StaffManager {
         Staff experimentalStaff = new Staff ("Marin","Costea","interzis@yahoo.com","mar23",encrypt.encrypt("nice"),2500);
         Staff experimentalStaff2 = new Staff("Ioana","Gheorghe","rockit@gmai.com","nope12",encrypt.encrypt("super"),4000);
         Staff experimentalStaff3 =new Staff("Jane","Daria","lol@gmail.com","Dar12",encrypt.encrypt("parolamea24"),3000);
-        JSONObject initialExp = new JSONObject(experimentalStaff);
         StaffManager godManager = new StaffManager();
         godManager.init();
         godManager.addJsonObj(experimentalStaff);
@@ -266,5 +211,62 @@ public class StaffManager {
         godManager.removeJsonArray(exp);
         System.out.println(godManager.showAll());
         //System.out.println(godManager.searchJsonObj("Jane",1));
+    }
+
+    public static class Staff {
+        private int staffId;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String username;
+        private String encryptedPassword;
+        private  float salary;
+
+        public Staff(String firstName, String lastName, String email, String username, String encryptedPassword, float salary) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.email = email;
+            this.username = username;
+            this.encryptedPassword = encryptedPassword;
+            this.salary = salary;
+        }
+
+        public float getSalary() {
+            return salary;
+        }
+
+        public int getStaffId() {
+            return staffId;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+
+        @Override
+        public String toString() {
+            return "{" +
+                    " \"staffId\": " +  staffId +
+                    ", \"firstName\": " + "\"" + firstName + "\"" +
+                    ", \"lastName\": " + "\"" + lastName + "\""  +
+                    ", \"email\": " + "\"" + email  + "\"" +
+                    ", \"username\": " + "\"" + username  + "\"" +
+                    ", \"encryptedPassword\": " + "\"" + encryptedPassword  + "\"" +
+                    ", \"salary\": " + "\"" + salary  + "\"" +
+                    '}';
+        }
     }
 }
