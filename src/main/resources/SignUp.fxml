@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="rootPane" prefHeight="800.0" prefWidth="1300.0" styleClass="a1" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="r.controller.SignUpController">
+<VBox fx:id="rootPane" prefHeight="800.0" prefWidth="1300.0" styleClass="a1" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignUpController">
     <stylesheets>
         <URL value="@style.css" />
     </stylesheets>

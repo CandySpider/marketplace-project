@@ -1,5 +1,6 @@
-package r.controller;
+package controller;
 
+import exceptions.UsernameDoesNotAlreadyExistsException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,8 +13,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.io.IOException;
+
+import managers.ClientManager;
 
 public class SignInController {
     double x = 0;
@@ -59,7 +61,7 @@ public class SignInController {
         stage.setScene(scene);
     }
 
-    /*@FXML
+    @FXML
     void logInVerification(ActionEvent event) throws IOException {
         String username = Username.getText();
         String password = Password.getText();
@@ -79,20 +81,30 @@ public class SignInController {
         if(username.equals("admin") && password.equals("admin")){
             try{
                 Stage stage = (Stage) Erroror.getScene().getWindow();
-                Parent viewAdminPage = FXMLLoader.load(getClass().getClassLoader().getResource("AdminScene.fxml"));
-                Scene scene = new Scene(viewAdminPage);
-
+                Parent viewAdmin = FXMLLoader.load(getClass().getClassLoader().getResource("ADMIN.fxml"));
+                Scene scene = new Scene(viewAdmin);
                 stage.setScene(scene);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
             return;
-        }else if(1==1) {
-            try {
-                UserService.verifyAccount(username, password);
+        } else if (username.equals("staff") && password.equals("staff")){
+            try{
                 Stage stage = (Stage) Erroror.getScene().getWindow();
-                Parent viewAdminPage = FXMLLoader.load(getClass().getClassLoader().getResource("EmployeeScene.fxml"));
+                Parent viewAdmin = FXMLLoader.load(getClass().getClassLoader().getResource("StaffScene.fxml"));
+                Scene scene = new Scene(viewAdmin);
+
+                stage.setScene(scene);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                ClientManager.verifyAccount(username, password);
+                Stage stage = (Stage) Erroror.getScene().getWindow();
+                Parent viewAdminPage = FXMLLoader.load(getClass().getClassLoader().getResource("UI.fxml"));
                 Scene scene = new Scene(viewAdminPage);
 
                 stage.setScene(scene);
@@ -101,17 +113,7 @@ public class SignInController {
             }
             return;
         }
-        Erroror.setText("Wrong username or password !");
     }
-    }*/
 
-    @FXML
-    void loadMainScene(ActionEvent event) throws IOException {
-        Stage stage = (Stage) rootPane.getScene().getWindow();
-        Parent viewUI = FXMLLoader.load(getClass().getClassLoader().getResource("UI.fxml"));
-        Scene scene = new Scene(viewUI);
-
-        stage.setScene(scene);
-    }
 
 }

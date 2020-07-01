@@ -8,12 +8,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="800.0" prefWidth="1300.0" styleClass="a1" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StaffSceneController">
+<VBox fx:id="rootPane" prefHeight="800.0" prefWidth="1300.0" styleClass="a1" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ADMINController">
     <stylesheets>
         <URL value="@style.css" />
     </stylesheets>
     <children>
-        <HBox alignment="TOP_RIGHT" prefHeight="46.0" prefWidth="1300.0" styleClass="a1">
+        <HBox alignment="TOP_RIGHT" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="46.0" prefWidth="1300.0" styleClass="a1">
             <children>
                 <Button mnemonicParsing="false" onMouseClicked="#close" prefWidth="30.0" styleClass="a2">
                     <graphic>
@@ -29,18 +29,18 @@
                 </Button>
             </children></HBox>
         <HBox alignment="CENTER" prefHeight="755.0" prefWidth="1300.0" style="-fx-background-color: #0d1026;">
-         <children>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" styleClass="si" text="Add product">
-               <HBox.margin>
-                  <Insets right="50.0" />
-               </HBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" styleClass="si" text="View Orders">
-               <HBox.margin>
-                  <Insets right="50.0" />
-               </HBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" styleClass="si" text="Back To Main" />
-         </children></HBox>
+            <children>
+                <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" styleClass="si" text="View Staff">
+                    <HBox.margin>
+                        <Insets right="50.0" />
+                    </HBox.margin>
+                </Button>
+                <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" styleClass="si" text="View Orders">
+                    <HBox.margin>
+                        <Insets right="50.0" />
+                    </HBox.margin>
+                </Button>
+                <Button mnemonicParsing="false" onAction="#loadMainScene" prefHeight="50.0" prefWidth="150.0" styleClass="si" text="Back To Main" />
+            </children></HBox>
     </children>
 </VBox>

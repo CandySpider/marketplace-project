@@ -10,11 +10,7 @@ import java.util.ArrayList;
 
 public class StaffManager {
     private String filePath;
-    private int staffCount=0;
-    public String getFilePath()
-    {
-        return this.filePath;
-    }
+    private int staffCount=0 ;
     public StaffManager ()
     {
         File testFile = new File("");
@@ -202,6 +198,7 @@ public class StaffManager {
         Staff experimentalStaff = new Staff ("Marin","Costea","interzis@yahoo.com","mar23",encrypt.encrypt("nice"),2500);
         Staff experimentalStaff2 = new Staff("Ioana","Gheorghe","rockit@gmai.com","nope12",encrypt.encrypt("super"),4000);
         Staff experimentalStaff3 =new Staff("Jane","Daria","lol@gmail.com","Dar12",encrypt.encrypt("parolamea24"),3000);
+        JSONObject initialExp = new JSONObject(experimentalStaff);
         StaffManager godManager = new StaffManager();
         godManager.init();
         godManager.addJsonObj(experimentalStaff);
@@ -213,7 +210,7 @@ public class StaffManager {
         //System.out.println(godManager.searchJsonObj("Jane",1));
     }
 
-    public static class Staff {
+    static class Staff {
         private int staffId;
         private String firstName;
         private String lastName;

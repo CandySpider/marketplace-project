@@ -8,17 +8,15 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<VBox fx:id="rootPane" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="800.0" prefWidth="1300.0" styleClass="a1" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="r.controller.WishlistController">
+<VBox fx:id="rootPane" prefHeight="800.0" prefWidth="1300.0" styleClass="a1" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ListController">
     <stylesheets>
         <URL value="@style.css" />
     </stylesheets>
     <children>
-        <HBox alignment="TOP_RIGHT" prefHeight="46.0" prefWidth="1300.0" styleClass="a1">
+        <HBox alignment="TOP_RIGHT" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="46.0" prefWidth="1300.0" styleClass="a1">
             <children>
-                <Button mnemonicParsing="false" prefHeight="25.0" onAction="#loadMainScene" prefWidth="35.0" styleClass="a2">
+                <Button mnemonicParsing="false" onAction="#loadMainScene" prefHeight="25.0" prefWidth="35.0" styleClass="a2">
                     <HBox.margin>
                         <Insets right="1200.0" top="10.0" />
                     </HBox.margin>
@@ -43,21 +41,13 @@
                     </HBox.margin>
                 </Button>
             </children></HBox>
-        <VBox prefHeight="755.0" prefWidth="1300.0" style="-fx-background-color: #0d1026;">
+        <HBox alignment="CENTER" prefHeight="755.0" prefWidth="1300.0" style="-fx-background-color: #0d1026;">
          <children>
-            <Text fill="#dddddd" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Wishlist" wrappingWidth="385.13671875">
-               <font>
-                  <Font name="Garamond" size="66.0" />
-               </font>
-            </Text>
-            <ListView prefHeight="397.0" prefWidth="1100.0" styleClass="a2">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </ListView>
+            <ListView fx:id="list" prefHeight="755.0" prefWidth="1054.0" styleClass="a2" />
          </children>
          <padding>
-            <Insets left="100.0" right="100.0" top="100.0" />
-         </padding></VBox>
+            <Insets bottom="50.0" top="50.0" />
+         </padding>
+        </HBox>
     </children>
 </VBox>

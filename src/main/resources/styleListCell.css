@@ -1,0 +1,13 @@
+.list-cell {
+    -fx-padding: 10 10 10 10;
+    -fx-background-color: #202020;
+    -fx-cell-size: 50;
+}
+.list-cell:selected {
+    -fx-background-color:  #363737;
+}
+
+.list-cell {
+    -fx-text-fill: white;
+    -fx-font-size: 20;
+}

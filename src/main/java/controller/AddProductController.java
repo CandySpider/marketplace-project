@@ -1,4 +1,4 @@
-package r.controller;
+package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class WishlistController {
+public class AddProductController {
     double x = 0;
     double y = 0;
 
@@ -38,9 +38,9 @@ public class WishlistController {
         stage.close();
     }
     @FXML
-    void loadMainScene(ActionEvent event) throws IOException {
+    void loadStaffScene(ActionEvent event) throws IOException {
         Stage stage = (Stage) rootPane.getScene().getWindow();
-        Parent viewUI = FXMLLoader.load(getClass().getClassLoader().getResource("UI.fxml"));
+        Parent viewUI = FXMLLoader.load(getClass().getClassLoader().getResource("StaffScene.fxml"));
         Scene scene = new Scene(viewUI);
 
         stage.setScene(scene);

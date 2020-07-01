@@ -160,26 +160,26 @@ public class ProductManager {
 
     }
     public JSONArray showAll ()
-    { JSONArray myArray=new JSONArray();
+    { JSONArray myArray = new JSONArray();
         try {
             String contents = new String((Files.readAllBytes(Paths.get(this.filePath))));
             JSONObject myObject = new JSONObject(contents);
             myArray = myObject.getJSONArray("product");
 
-        }catch (IOException e)
+        } catch (IOException e)
         {e.printStackTrace();}
         return myArray;
     }
     public static void main(String[] argv) {
 
-            Product experimentalProduct = new Product(0,"careProducts","Dyson Hair Curler",120,"automatic ceramic hair curler");
+            Product experimentalProduct = new Product(0,"careProducts","Dyson Hair Curler",249.99,120,"automatic ceramic hair curler");
 
             ProductManager manageStuff = new ProductManager();
             manageStuff.init();
             manageStuff.addJsonObj(experimentalProduct);
-            manageStuff.addJsonObj(new Product(0,"toys","Jucarie Mega",25,"Super faina!"));
-            manageStuff.addJsonObj(new Product(1,"tech","Telfon",40,"Iphone"));
-            manageStuff.addJsonObj(new Product(2,"food","Ciocolata",15,"Super faina!"));
+            manageStuff.addJsonObj(new Product(0,"toys","Jucarie Mega",12.99,25,"Super faina!"));
+            manageStuff.addJsonObj(new Product(1,"tech","Telefon",299.99,40,"Iphone"));
+            manageStuff.addJsonObj(new Product(2,"food","Ciocolata",14.99,15,"Super faina!"));
 //            int exp [] = {0,1,2,3};
 //            manageStuff.removeJsonArray(exp);
             System.out.println(manageStuff.showAll());
@@ -194,6 +194,7 @@ public class ProductManager {
         private String description;
         private int orderId;
         private String category;
+        private double price;
 
         public String getCategory() {
             return category;
@@ -219,10 +220,14 @@ public class ProductManager {
             return description;
         }
 
-        public Product(int orderId,String category,String name, int quantity, String description) {
+        public double getPrice() { return price; }
+
+
+        public Product(int orderId, String category, String name, double price, int quantity, String description) {
             this.orderId=orderId;
             this.category=category;
             this.name = name;
+            this.price = price;
             this.quantity = quantity;
             this.description = description;
 
@@ -235,6 +240,7 @@ public class ProductManager {
                     ", \"orderId\": " +  "\"" + + orderId  +  "\"" +   // =-1 => inStock
                     ", \"category\": " + "\"" + category + "\"" +
                     ", \"name\": " + "\"" + name + "\"" +
+                    ", \"price\": " + "\"" + price + "\"" +
                     ", \"quantity\": " + "\"" + quantity + "\"" +
                     ", \"description\": " + "\"" + description + "\""  +
                     '}';
